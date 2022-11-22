@@ -13,45 +13,35 @@
 <div class="image"> 
 <!--<img src="../../../public/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">-->
 </div>
-<div class="info">
-<a href="#" class="d-block">Alexander Pierce</a>
-</div>
+
 </div>
 
-<div class="form-inline">
-<div class="input-group" data-widget="sidebar-search">
-<input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-<div class="input-group-append">
-<button class="btn btn-sidebar">
-<i class="fas fa-search fa-fw"></i>
-</button>
-</div>
-</div>
-</div>
+
 
 <nav class="mt-2">
 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
-
 <li class="nav-item">
-<router-link to="/dashboard" class="nav-link">
-<i class="nav-icon fas fa-th"></i>
+
+<a  class="nav-link" @click="editar">
+    <i class="nav-icon fas fa-th"></i>
 <p>
 Editar perfil 
 
 </p>
-</router-link>
+</a>
+
 
 </li>
 
 <li class="nav-item">
-<a href="../widgets.html" class="nav-link">
+<router-link to="/adminuser" class="nav-link">
 <i class="nav-icon fas fa-th"></i>
 <p>
 Administrar usuarios
 
 </p>
-</a>
+</router-link>
 
 </li>
 </ul>
@@ -97,11 +87,11 @@ Administrar usuarios
 
 </div>
 
-<footer class="main-footer">
+<div class="main-footer">
 <foot>
 
 </foot>
-</footer>
+</div>
 
 <aside class="control-sidebar control-sidebar-dark">
 
@@ -109,14 +99,24 @@ Administrar usuarios
  
 </template>
 <script setup>
- 
-import headup from '@/components/headLink.vue';
+import {useRouter} from 'vue-router';
+const router=useRouter()
+
+const usuarioId = JSON.parse(document.head.querySelector('meta[name="user"]').content);
+const path="edit/"+usuarioId
+const id_count = () =>{
+    console.log(usuarioId);
+}
+const editar= () =>{
+    console.log("waos");
+    router.push('/edit/'+usuarioId);
+}
 </script>
 
 
 
 
-
+ 
 
 
 

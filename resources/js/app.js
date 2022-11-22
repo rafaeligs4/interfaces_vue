@@ -19,6 +19,7 @@ import { createApp } from 'vue';
 
 
 import headup from './components/headLink.vue';
+import sidebar from './components/sidebar.vue';
 import footer from './components/footer.vue';
 import App from './components/App.vue';
 const app=createApp(App);

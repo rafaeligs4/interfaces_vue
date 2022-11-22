@@ -20,6 +20,12 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+            $table->string('apellido')->nullable();
+            $table->string('cedula')->nullable();
+            $table->string('no_licencia')->nullable();
+            $table->string('foto_perfil')->nullable();
+            $table->string('foto_licencia')->nullable();
+            $table->boolean('estado')->default(true);
             $table->timestamps();
         });
     }
