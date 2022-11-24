@@ -26,6 +26,8 @@ return new class extends Migration
             $table->string('foto_perfil')->nullable();
             $table->string('foto_licencia')->nullable();
             $table->boolean('estado')->default(true);
+            $table->date('fecha_nac')->nullable();
+            $table->date('fecha_venc')->nullable();
             $table->timestamps();
         });
     }

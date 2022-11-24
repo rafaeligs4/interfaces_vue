@@ -44,6 +44,16 @@ Administrar usuarios
 </router-link>
 
 </li>
+<li class="nav-item">
+<router-link to="/newcar" class="nav-link">
+<i class="nav-icon fas fa-th"></i>
+<p>
+Crear auto
+
+</p>
+</router-link>
+
+</li>
 </ul>
 </nav>
 

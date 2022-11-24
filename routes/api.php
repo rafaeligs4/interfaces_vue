@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\type_carController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,4 +21,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::get('/edit/{id}',[UserController::class,'view']); 
+Route::get('/get_all',[UserController::class,'get_users']);
+Route::get('/delete_user/{id}',[UserController::class,'delete']);
+Route::get('/get_all_types_cars',[type_carController::class,'get_type_cars']);
 Route::post('/upload/{id}',[UserController::class,'update']); 
+Route::post('/type/create',[type_carController::class,'create']); 
