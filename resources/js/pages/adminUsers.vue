@@ -15,13 +15,13 @@ const eliminarPerfil = (num) =>{
    
     axios.get('/api/delete_user/'+num)
     .then((response)=>{
-        console.log(response.data);
+        console.log(response.data); 
         all_users();
     })
     .catch(()=>{
         
     });
-}
+} 
 </script>
 <template>
     <div class="container">

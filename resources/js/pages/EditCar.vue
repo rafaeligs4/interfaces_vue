@@ -18,7 +18,12 @@ const typeImg= (id) =>{
         valor = 3;
     }
 }
-
+const props=defineProps({
+    id:{
+        type: String,
+        default: ''
+    }    
+}); 
 let form= ref({
     marca:'',
     modelo: '',
@@ -32,9 +37,13 @@ let form= ref({
     foto4: '',
     select_values: []
 }); 
+
 const value_select=form.value.select_values; 
 const getP= async () => {
-    console.log(value_select);
+    let response = await axios.get('/api/get_car/'+props.id);  
+    console.log(response);  
+    form.value=response.data.car;
+    console.log(form.value.tipo);
 } 
 
 const uploadData= () => {
@@ -50,7 +59,7 @@ const uploadData= () => {
     formdata.append('foto2',form.value.foto2);
     formdata.append('foto3',form.value.foto3);
     formdata.append('foto4',form.value.foto4);
-   axios.post('/api/create_car',formdata)  
+   axios.post('/api/edit_car/'+props.id,formdata)  
     .then((response)=>{
         console.log(response.data)
     })
@@ -116,10 +125,11 @@ const getTypes= async () =>{
         console.log(form.value.select_values); 
         
    }); 
-
 }
 onMounted(()=>{
- getTypes();
+    getP(); 
+    getTypes();
+
 });
 
 </script> 

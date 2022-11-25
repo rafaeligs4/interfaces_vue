@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+  
     public function view($id){
       $user = User::find($id);
       return response()->json([
@@ -23,7 +24,6 @@ class UserController extends Controller
       $user->no_licencia  =$request->no_licencia ??  $user->no_licencia ?? null;
       $user->fecha_nac = $request->fecha_nac ??  $user->fecha_nac ?? null;
       $user->fecha_venc = $request->fecha_venc ?? $user->fecha_venc ?? null;
-     
       if($user->foto_perfil != $request->foto_perfil){
     
          $strpos= strpos($request->foto_perfil,';');
@@ -69,4 +69,5 @@ class UserController extends Controller
    }   
       
 } 
+
  

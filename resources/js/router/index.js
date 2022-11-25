@@ -8,6 +8,8 @@ import profile from '../pages/profile.vue';
 import adminUser from '../pages/adminUsers.vue';
 import newCar from '../pages/NewCar.vue';
 import editType from '../pages/EditType.vue';
+import adminCars from '../pages/adminCars.vue';
+import editCar from '../pages/EditCar.vue';
 //import {ExampleComponent} from '../components/ExampleComponent.vue';
 const routes=[
 
@@ -38,8 +40,17 @@ const routes=[
             {
                 path: '/type',
                 component: editType
-            }
-    
+            },
+                
+            {
+                path: '/admincars',
+                component: adminCars
+            },
+            {
+                path: '/editcar/:id',
+                component: editCar,
+                props: true 
+            },
     ]
         
     },  
