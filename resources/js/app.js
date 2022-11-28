@@ -4,8 +4,17 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-import './bootstrap';
+import './bootstrap'; 
 
+//import 'jquery' ;  
+
+// import jQuery from 'jquery'; 
+// //require( 'pdfmake' );  
+// var dt= require( 'datatables.net-dt' )(); 
+// require( 'datatables.net-buttons-dt' )();
+// require( 'datatables.net-buttons/js/buttons.html5.js' )();
+// require( 'datatables.net-buttons/js/buttons.print.js' )();
+// require( 'datatables.net-searchpanes-dt' )(); 
 import router from "./router"
 
 

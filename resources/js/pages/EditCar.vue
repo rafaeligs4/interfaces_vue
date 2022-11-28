@@ -1,9 +1,11 @@
 <script setup>
 //importando clases
 import axios from 'axios';
-
 import { onMounted, ref } from 'vue';
 let valor = 0;
+let arr=[];  
+let pos1=0;
+let pos2=0;
 //para identificar los tipos de imagen
 const typeImg= (id) =>{
     if(id==0){
@@ -25,6 +27,7 @@ const props=defineProps({
     }    
 }); 
 let form= ref({
+    id:'',  
     marca:'',
     modelo: '',
     color: '',
@@ -35,15 +38,33 @@ let form= ref({
     foto2: '',
     foto3: '',
     foto4: '',
-    select_values: []
+    select_values: [],
+
 }); 
 
-const value_select=form.value.select_values; 
 const getP= async () => {
-    let response = await axios.get('/api/get_car/'+props.id);  
-    console.log(response);  
-    form.value=response.data.car;
-    console.log(form.value.tipo);
+    let response = await axios.get('/api/get_car/'+props.id)
+   
+   
+    console.log(arr); 
+    form.value=response.data.car; 
+    
+    console.log(arr);
+    console.log(response);
+    
+    
+    console.log(form.value.id);
+    arr = [
+    form.value.foto1,
+    form.value.foto2,
+    form.value.foto3,
+    form.value.foto4,
+    ];    
+    
+ 
+   
+  
+   
 } 
 
 const uploadData= () => {
@@ -57,8 +78,8 @@ const uploadData= () => {
     formdata.append('estado',form.value.estado); 
     formdata.append('foto1',form.value.foto1);
     formdata.append('foto2',form.value.foto2);
-    formdata.append('foto3',form.value.foto3);
-    formdata.append('foto4',form.value.foto4);
+    formdata.append('foto3',form.value.foto3); 
+    formdata.append('foto4',form.value.foto4); 
    axios.post('/api/edit_car/'+props.id,formdata)  
     .then((response)=>{
         console.log(response.data)
@@ -126,10 +147,52 @@ const getTypes= async () =>{
         
    }); 
 }
-onMounted(()=>{
-    getP(); 
-    getTypes();
+const selecPhotos = (el)=>{
+    console.log(arr);
+    console.log(el);
+    if(pos1 == 0){
+        pos1 = el+1;
+    }
+    else if(pos2 == 0){
+       pos2 = el+1;
+    }
+    else if(pos1 == pos2){
+        pos1=0;
+        pos2=0;
+        console.log('reset');
+    } 
+    else if(pos1 != 0 && pos2 != 0){
+      console.log(pos1 );
 
+      console.log(pos2 ); 
+      console.log(arr); 
+        let auxval="";
+       arr[pos1-1]; 
+        auxval=arr[pos1-1];
+        arr[pos1-1]= arr[pos2-1];
+        arr[pos2-1]=auxval; 
+      pos1=0;
+        pos2=0; 
+         console.log(arr); 
+        let formdata =new FormData();
+        formdata.append('foto1',arr[0]);
+        formdata.append('foto2',arr[1]);
+        formdata.append('foto3',arr[2]);
+        formdata.append('foto4',arr[3]);
+        axios.post('/api/changeposition/'+form.value.id,formdata)
+        .then(response=>{
+            console.log(response.data); 
+            getP();
+        });
+      //   
+    }
+}
+onMounted(()=>{
+    getP();
+    getTypes();
+    
+   
+    console.log(arr); 
 });
 
 </script> 
@@ -203,29 +266,34 @@ onMounted(()=>{
                 <p>Foto secundaria</p>
                 <img :src="knowPhoto(3)"  alt="" class="col-2 w-50"> 
             </div> 
-         
+            
+            <button @click="selecPhotos(0)" >Cambiar posicion</button>
             <form action="">
             <label for="">Agrega una foto principal</label>
             <input type="file"  @click="typeImg(0)" id="img_perfil" @change="updateImages">
+           
             </form>
-             
+            <button  @click="selecPhotos(1)" >Cambiar posicion</button>
             <form action="">
             <label for="">Agrega una foto secundaria</label>
           
             <input type="file"  @click="typeImg(1)" id="img_perfil" @change="updateImages" >
+           
             </form>
-
+            <button  @click="selecPhotos(2)" >Cambiar posicion</button>
             <form action="">
             <label for="">Agrega una foto secundaria</label>
 
             <input type="file"  @click="typeImg(2)" id="img_perfil" @change="updateImages" >
+          
             </form>
-            
+            <button  @click="selecPhotos(3)" >Cambiar posicion</button>
             <form action="">
             <label for="">Agrega una foto secundaria</label>
           
             <input type="file"  @click="typeImg(3)" id="img_perfil" @change="updateImages">
-            </form> 
+           
+            </form>  
             
         <button class="button" v-on:click="uploadData()">
             Subir

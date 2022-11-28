@@ -9,6 +9,8 @@ import adminUser from '../pages/adminUsers.vue';
 import newCar from '../pages/NewCar.vue';
 import editType from '../pages/EditType.vue';
 import adminCars from '../pages/adminCars.vue';
+import adminTypeCars from '../pages/adminTypeCar.vue';
+import editCarType from '../pages/editCarType.vue'; 
 import editCar from '../pages/EditCar.vue';
 //import {ExampleComponent} from '../components/ExampleComponent.vue';
 const routes=[
@@ -51,6 +53,16 @@ const routes=[
                 component: editCar,
                 props: true 
             },
+            {
+                path: '/admintypecar',  
+                component: adminTypeCars,
+              
+            },
+            {
+                path: '/editcartype/:id',
+                component: editCarType,
+                props: true 
+            }
     ]
         
     },  

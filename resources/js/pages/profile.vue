@@ -1,6 +1,11 @@
 <script setup>
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
+import useValidate from '@vuelidate/core';
+import {required,email,minLength,numeric,maxLength} from '@vuelidate/validators';
+
+
+
 let valor = 0;
 const typeImg= (id) =>{
     if(id==0){
@@ -9,9 +14,7 @@ const typeImg= (id) =>{
         valor = 1;
     }
 }
-onMounted(async () => {
-   getP();
-})
+
 
 let form= ref({
     name:'',
@@ -28,36 +31,83 @@ const props=defineProps({
         type: String,
         default: ''
     }    
-})
+});
+const timeSkip = (date)=>{
+    const start= new Date(date);
+    console.log(date);   
+    const end = new Date();
+
+    end.setFullYear(end.getFullYear()-20);
+    if(start<end){
+       return true;
+    }else{
+        return false;
+    }
+  
+   
+}
+const supSkip = (date)=>{
+    const start= new Date(date);
+  
+    const end = new Date();
+   
+    if(start>end){
+       return true;
+    }else{
+        return false;
+    }
+}; 
+const rules = {
+   name: {required},
+    apellido:{required, minLength: minLength(6)},
+   
+};
+let v$=useValidate(rules,form.value);
+ 
+const validateData= ()=>{
+    v$.value.$validate();
+    if(v$.value.$error){
+
+        console.log('error');
+    }else{
+        console.log('no error');
+    }
+    // console.log(v$.value.name.$error); 
+   console.log(v$.value.cedula.$errors);  
+} 
+
 const getP= async () => {
 
     let response = await axios.get('/api/edit/'+props.id);  
     console.log(response);
     form.value=response.data.user; 
 } 
+
 const uploadData= () => {
+ //   console.log(form.value.fecha_nac);
     console.log("sending");
-    const formdata=new FormData();
-    formdata.append('name',form.value.name);
-    formdata.append('apellido',form.value.apellido);
-    formdata.append('cedula',form.value.cedula);
-    formdata.append('no_licencia',form.value.no_licencia); 
-    formdata.append('fecha_nac',form.value.fecha_nac); 
-    formdata.append('fecha_venc',form.value.fecha_venc); 
-    formdata.append('foto_perfil',form.value.foto_perfil);
-    formdata.append('foto_lic',form.value.foto_licencia); 
-    axios.post('/api/upload/'+props.id,formdata)  
-    .then((response)=>{
-        console.log(response.data)
+    
+    // const formdata=new FormData();
+    // formdata.append('name',form.value.name);
+    // formdata.append('apellido',form.value.apellido);
+    // formdata.append('cedula',form.value.cedula);
+    // formdata.append('no_licencia',form.value.no_licencia); 
+    // formdata.append('fecha_nac',form.value.fecha_nac); 
+    // formdata.append('fecha_venc',form.value.fecha_venc); 
+    // formdata.append('foto_perfil',form.value.foto_perfil);
+    // formdata.append('foto_lic',form.value.foto_licencia); 
+    // axios.post('/api/upload/'+props.id,formdata)  
+    // .then((response)=>{
+    //     console.log(response.data)
         
-    form.value.name='',
-    form.value.apellido='',
-    form.value.cedula=''
-    })
-    .catch((error)=>{
-        console.log(error.response)
-    })
-    ;
+    // form.value.name='',
+    // form.value.apellido='',
+    // form.value.cedula=''
+    // })
+    // .catch((error)=>{
+    //     console.log(error.response)
+    // })
+    // ;
 }
 const uploadImage = (e) =>{
     let file= e.target.files[0];
@@ -108,6 +158,9 @@ const getPhotoLic = () =>{
     console.log("no la lee");
     return photo; 
 }
+onMounted(async () => {
+   getP();
+})
 
 
 </script>
@@ -119,11 +172,19 @@ const getPhotoLic = () =>{
             <h1>Editar perfil </h1> 
         </div>
         <div class="card">
+            <!-- <div v-if="v$.name.$error">
+               
+                <span v-if="v$.name.required.$invalid">Hola</span>
+            </div> -->
             <div>
                 <label for="">Nombre</label>
                 <input  v-model="form.name"> 
             </div>
             <div>
+                   <div v-if="v$.apellido.$error">
+             
+                <span v-if="v$.apellido.required.$invalid">Hola</span>
+            </div> 
                 <label for="">apellido</label>
                 <input  v-model="form.apellido"> 
             </div>
@@ -163,7 +224,7 @@ const getPhotoLic = () =>{
            
             <input type="file" id="img_lic" @click="typeImg(1)" @change="uploadImage">
             </form>
-        <button class="button" v-on:click="uploadData()">
+        <button class="button" v-on:click="validateData()">
             Subir
         </button>
         </div>
@@ -171,3 +232,4 @@ const getPhotoLic = () =>{
     </div>
     
 </template>
+ 

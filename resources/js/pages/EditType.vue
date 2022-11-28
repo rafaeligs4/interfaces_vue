@@ -28,6 +28,7 @@ const form = ref({
     nombre_tipo_vehiculo: '',
     estado: false
 });
+
 const uploadType = () =>{
 const formdata=new FormData(); 
     formdata.append('nombre_tipo_vehiculo',form.value.nombre_tipo_vehiculo);

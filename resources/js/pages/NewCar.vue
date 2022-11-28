@@ -1,9 +1,16 @@
 <script setup>
 //importando clases
-import axios from 'axios';
 
+
+
+import axios from 'axios';
+import useValidate from '@vuelidate/core';
+import {required,email,minLength} from '@vuelidate/validators';
 import { onMounted, ref } from 'vue';
+
 let valor = 0;
+let submitted = false,
+submitted2=false; 
 //para identificar los tipos de imagen
 const typeImg= (id) =>{
     if(id==0){
@@ -32,6 +39,20 @@ let form= ref({
     foto4: '',
     select_values: []
 }); 
+
+const rules = {
+    marca: {required,minLength: minLength(6)}, 
+    modelo:{required,minLnegth: minLength(4)},
+    color: {required,minLnegth: minLength(4)},
+    placa: {required,minLnegth: minLength(6)},
+    estado: {required},
+    tipo: {required},
+    foto1: {required},
+    foto2: {required}, 
+    foto3: {required},
+    foto4: {required},
+};
+let v$ = useValidate(rules,form.value);
 const value_select=form.value.select_values; 
 const getP= async () => {
     console.log(value_select);
@@ -109,9 +130,22 @@ const updateImages = (e) => {
     } 
     reader.readAsDataURL(file); 
 } 
+const validateData = ()=>{
+  submitted = true;
+  submitted2= true;
+ 
+  v$.value.$validate();
+ if(v$.value.$error){
+    console.log('Incorrecto');
+
+ }else{
+    console.log('Correcto'); 
+ }
+};
+
 const getTypes= async () =>{
-   let value = axios.get('/api/get_all_types_cars')
-   .then((response)=>{
+   let value = axios.get('/api/get_types_cars')
+   .then((response)=>{ 
         form.value.select_values=response.data.tipos;
         console.log(form.value.select_values); 
         
@@ -131,24 +165,48 @@ onMounted(()=>{
         </div>
         <div class="card">
             <div>
+                <div v-if="v$.marca.$error"> 
+                  <span v-if="v$.marca.required.$invalid">La Marca es requerida</span>
+                  <span v-if="v$.marca.minLength.$invalid">Minimo 6 letras</span>      
+                </div>
+
+
                 <label for="">Marca</label>
                 <input  v-model="form.marca"> 
             </div>
             <div>
+                <div v-if="v$.modelo.$error" >  
+                  <span v-if="v$.modelo.required.$invalid">El modelo es requerida</span>
+                  <span v-if="v$.modelo.minLnegth.$invalid">Minimo 6 letras</span>      
+                </div>     
                 <label for="">Modelo</label>
                 <input  v-model="form.modelo"> 
+                
             </div>
             <div>
+                <div v-if="v$.modelo.$error" >  
+                  <span v-if="v$.placa.required.$invalid">El modelo es requerido </span>
+                  <span v-if="v$.placa.minLnegth.$invalid">Minimo 6 letras</span>      
+                </div>
                 <label for="">Placa</label>
                 <input  v-model="form.placa"> 
             </div>
             <div>
+                <div v-if="v$.color.$error" >  
+                  <span v-if="v$.color.required.$invalid">El color es requerido </span>
+                  <span v-if="v$.color.minLnegth.$invalid">Minimo 4 letras </span>      
+                </div>
                 <label for="">Color</label>
                 <input  v-model="form.color"> 
             </div>
             <div>
+                <div v-if="v$.estado.$error" >  
+                  <span v-if="v$.estado.required.$invalid">El estado es requerido</span>
+                    
+                </div>
                 <label for="">estado</label>
                 <select name="" id="" v-model="form.estado">
+                   <option disabled value="">Seleccione un elemento</option>
                    <option value="Activo">Activo</option>
                    <option value="Inactivo">Inactivo</option>
                    <option value="Alquilado">Alquilado</option>  
@@ -157,6 +215,9 @@ onMounted(()=>{
 
             </div>
             <div>
+                <div v-if="v$.tipo.$error" >  
+                  <span v-if="v$.tipo.required.$invalid">El Tipo es requerido</span>
+                </div>
                 <label for="">tipo</label>
             <select  v-model="form.tipo">
                    <option v-for="tipo in form.select_values" 
@@ -178,19 +239,37 @@ onMounted(()=>{
             </div>
           
           <div class="">
+
                 <p>Foto principal</p>
                 <img :src="knowPhoto(0)" alt="" class="col-2 " >
+                <div v-if="v$.foto1.$error" >  
+                  <span v-if="v$.foto1.required.$invalid">La foto principal es requerida </span>
+                     
+                </div>   
+
             </div> 
             <div class="">
                 <p>Foto Secundaria</p>
                 <img :src="knowPhoto(1)"  alt="" class="col-2 w-50">
+                <div v-if="v$.foto2.$error" >  
+                  <span v-if="v$.foto2.required.$invalid">La foto principal es requerida</span>
+                     
+                </div>
             </div> 
             <div class="">
                 <p>Foto secundaria</p>
                 <img :src="knowPhoto(2)" alt="" class="col-2 w-50">
+                <div v-if="v$.foto3.$error" >  
+                  <span v-if="v$.foto3.required.$invalid">La foto principal es requerida</span>
+                     
+                </div>
             </div> 
             <div class="">
                 <p>Foto secundaria</p>
+                <div v-if="v$.foto4.$error" >  
+                  <span v-if="v$.foto4.required.$invalid">La foto principal es requerida</span>
+                     
+                </div>
                 <img :src="knowPhoto(3)"  alt="" class="col-2 w-50"> 
             </div> 
          
@@ -217,7 +296,7 @@ onMounted(()=>{
             <input type="file"  @click="typeImg(3)" id="img_perfil" @change="updateImages">
             </form> 
             
-        <button class="button" v-on:click="uploadData()">
+        <button class="button" v-on:click="validateData()">
             Subir
         </button>
         </div>

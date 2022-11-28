@@ -22,13 +22,16 @@
 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
 <li class="nav-item">
-
-<a  class="nav-link" @click="editar">
+<router-link :to='"/edit/"+usuarioId' class="nav-link">
     <i class="nav-icon fas fa-th"></i>
 <p>
 Editar perfil 
-
+ 
 </p>
+
+</router-link>
+<a  class="nav-link" @click="editar">
+    
 </a>
 
 
@@ -62,6 +65,16 @@ Administrar Autos
 
 </p>
 </router-link>
+
+</li>
+<li class="nav-item">
+<router-link to="/admintypecar" class="nav-link">
+<i class="nav-icon fas fa-th"></i>
+<p>
+Administrar tipos de vehiculos
+
+</p>
+</router-link> 
 
 </li>
 </ul>
@@ -127,10 +140,7 @@ const path="edit/"+usuarioId
 const id_count = () =>{
     console.log(usuarioId);
 }
-const editar= () =>{
-    console.log("waos");
-    router.push('/edit/'+usuarioId);
-}
+
 </script>
 
 

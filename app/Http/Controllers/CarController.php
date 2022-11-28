@@ -167,5 +167,19 @@ class CarController extends Controller
         }
         $car->delete();  
     }
+    public function changeState(Request $request, $id){
+   //   return response()->json(['message'=> $request->estado]); 
+        $car = car::find($id);
+        $car->estado = $request->estado;
+       $car->save();
+    } 
+    public function changePosition(Request $request, $id){
+      $car =car::find($id);
+      $car->foto1 = $request->foto1;
+      $car->foto2 = $request->foto2;
+      $car->foto3 = $request->foto3;
+      $car->save(); 
+      return response()->json(['message'=>'hola']); 
+    }
 } 
 

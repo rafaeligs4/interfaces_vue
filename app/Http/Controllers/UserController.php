@@ -30,7 +30,7 @@ class UserController extends Controller
          $sub= substr($request->foto_perfil,0,$strpos);
          $ex = explode('/',$sub)[1];
          $name=Str::uuid().".".$ex;
-         $img = Image::make($request->foto_perfil)->resize(200,200); 
+         $img = Image::make($request->foto_perfil)->resize(200,200);  
          $upload_path = public_path()."/photo/" ;
          $img->save($upload_path.$name);
          $user->foto_perfil = $name;
@@ -69,5 +69,3 @@ class UserController extends Controller
    }   
       
 } 
-
- 
