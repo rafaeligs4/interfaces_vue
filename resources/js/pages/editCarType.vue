@@ -1,4 +1,4 @@
-<script setup >
+<script setup> 
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
 const form = ref({

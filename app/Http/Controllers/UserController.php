@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 use Intervention\Image\Facades\Image;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -17,6 +19,26 @@ class UserController extends Controller
     }
     public function update(Request $request, $id){
       $user = User::find($id);
+    //  return response()->json(['error'=>$request->foto_perfil]);    
+     $date_today=Carbon::now();      
+      $date=Carbon::now();
+      $validate=Validator::make($request->all(),
+      [
+        'name'=>['required','min:4','max:30'],
+        'apellido'=>['required','min:4','max:30'], 
+        'cedula'=>['required','unique:users,cedula,'.$user->cedula,'min:4','max:10'],
+         'no_licencia'=>['required','unique:users,no_licencia,'.$user->no_licencia,'min:4','max:10'],
+         'fecha_nac'=>['required','before_or_equal:'.$date_today->subYears(18)->format('y-m-d')],
+         'fecha_venc'=>['required','after_or_equal:'.$date->format('y-m-d')],
+         'foto_perfil'=>['required','image'],
+         'foto_lic'=>['required','image'], 
+      ] 
+       
+    );
+    if ($validate->fails()) {
+      return response()->json(['error'=>$validate->errors()]);                  
+    }
+
 
       $user->name= $request->name ?? $user->name ?? null; 
       $user->apellido = $request->apellido ?? $user->apellido  ?? null;

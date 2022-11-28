@@ -1,6 +1,10 @@
 <template>
  <h1>Tipo de vehiculo</h1>
  <div>
+    <div v-if="v$.nombre_tipo_vehiculo.$error"> 
+                  <span v-if="v$.nombre_tipo_vehiculo.required.$invalid">La Marca es requerida</span>
+                
+    </div>
     <label for="">Agregar nombre al tipo de vehiculo</label>
     <input type="text" v-model="form.nombre_tipo_vehiculo">
  </div>   
@@ -16,12 +20,14 @@
  </div>
  <div>
 
-        <button @click="uploadType()"> 
+        <button @click="validateData()"> 
             Subir
         </button>
  </div>
 </template>
 <script setup>
+import useValidate from '@vuelidate/core';
+import {required,email,minLength} from '@vuelidate/validators';
 import axios from 'axios';
 import { ref } from 'vue';
 const form = ref({
@@ -40,4 +46,16 @@ const formdata=new FormData();
    });
  
 };  
+
+const rules = {
+    nombre_tipo_vehiculo: {required}, 
+    //modelo:{required,minLnegth: minLength(4)},    
+};
+let v$=useValidate(rules,form.value);
+const validateData = () =>{
+    v$.value.$validate();
+    if(v$.value.$error){
+        console.log('error');
+    }
+};
 </script>

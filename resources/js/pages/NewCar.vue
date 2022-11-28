@@ -9,7 +9,7 @@ import {required,email,minLength} from '@vuelidate/validators';
 import { onMounted, ref } from 'vue';
 
 let valor = 0;
-let submitted = false,
+let submitted = false, 
 submitted2=false; 
 //para identificar los tipos de imagen
 const typeImg= (id) =>{
@@ -93,7 +93,7 @@ const knowPhoto = (numero) =>{
     else if(numero==3){ 
         img=form.value.foto4;
     }  
-    let photo = "/photo/usuario.svg";
+    let photo = "/photo/image.svg";
     if( img!= "" ){
         if(img.indexOf('base64') != -1){
             photo=img; 
@@ -163,7 +163,51 @@ onMounted(()=>{
         <div>
             <h1>Crear Auto </h1> 
         </div>
-        <div class="card">
+        <div class="row">
+        <div class="col-6">
+        <div class="col-12">
+        <p>Foto principal</p>
+        <img :src="knowPhoto(0)" alt="" class="col-12" >
+        <div v-if="v$.foto1.$error" >  
+        <span v-if="v$.foto1.required.$invalid">La foto principal es requerida </span>     
+        </div>   
+
+        </div> 
+        <div class="row justify-content-start ">
+        <div class="col-4">
+            <p>Foto Secundaria</p>
+             <img :src="knowPhoto(1)"  alt="" class="col-12">
+        <div v-if="v$.foto2.$error" >  
+            <span v-if="v$.foto2.required.$invalid">La foto principal es requerida</span>
+     
+        </div>
+        </div> 
+        <div class="col-4">
+            <p>Foto secundaria</p>
+            <img :src="knowPhoto(2)" alt="" class="col-12">
+            <div v-if="v$.foto3.$error" >  
+                <span v-if="v$.foto3.required.$invalid">La foto principal es requerida</span>
+     
+            </div>
+        </div> 
+<div class="col-4">
+<p>Foto secundaria</p>
+<div v-if="v$.foto4.$error" >  
+  <span v-if="v$.foto4.required.$invalid">La foto principal es requerida</span>
+     
+</div>
+<img :src="knowPhoto(3)"  alt="" class="col-12"> 
+</div> 
+</div>        
+
+        </div>    
+
+       
+
+
+
+
+
             <div>
                 <div v-if="v$.marca.$error"> 
                   <span v-if="v$.marca.required.$invalid">La Marca es requerida</span>
@@ -238,40 +282,7 @@ onMounted(()=>{
                
             </div>
           
-          <div class="">
-
-                <p>Foto principal</p>
-                <img :src="knowPhoto(0)" alt="" class="col-2 " >
-                <div v-if="v$.foto1.$error" >  
-                  <span v-if="v$.foto1.required.$invalid">La foto principal es requerida </span>
-                     
-                </div>   
-
-            </div> 
-            <div class="">
-                <p>Foto Secundaria</p>
-                <img :src="knowPhoto(1)"  alt="" class="col-2 w-50">
-                <div v-if="v$.foto2.$error" >  
-                  <span v-if="v$.foto2.required.$invalid">La foto principal es requerida</span>
-                     
-                </div>
-            </div> 
-            <div class="">
-                <p>Foto secundaria</p>
-                <img :src="knowPhoto(2)" alt="" class="col-2 w-50">
-                <div v-if="v$.foto3.$error" >  
-                  <span v-if="v$.foto3.required.$invalid">La foto principal es requerida</span>
-                     
-                </div>
-            </div> 
-            <div class="">
-                <p>Foto secundaria</p>
-                <div v-if="v$.foto4.$error" >  
-                  <span v-if="v$.foto4.required.$invalid">La foto principal es requerida</span>
-                     
-                </div>
-                <img :src="knowPhoto(3)"  alt="" class="col-2 w-50"> 
-            </div> 
+          
          
             <form action="">
             <label for="">Agrega una foto principal</label>
