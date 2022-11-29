@@ -8,6 +8,11 @@ import useValidate from '@vuelidate/core';
 import {required,email,minLength} from '@vuelidate/validators';
 import { onMounted, ref } from 'vue';
 
+document.getElementById("attachment").addEventListener('click', function() {
+    document.getElementById("file-input").click();
+});
+
+
 let valor = 0;
 let submitted = false, 
 submitted2=false; 
@@ -157,17 +162,15 @@ onMounted(()=>{
 });
 
 </script> 
-<template>
-    <h1>Hola</h1>
+<template>    
     <div class="container">
         <div>
             <h1>Crear Auto </h1> 
         </div>
         <div class="row">
-        <div class="col-6">
-        <div class="col-12">
-        <p>Foto principal</p>
-        <img :src="knowPhoto(0)" alt="" class="col-12" >
+        <div class="col-6 flex justify-content-center">
+        <div class="col-md-12">      
+        <img :src="knowPhoto(0)" alt="" class="col-7" >
         <div v-if="v$.foto1.$error" >  
         <span v-if="v$.foto1.required.$invalid">La foto principal es requerida </span>     
         </div>   
@@ -175,7 +178,7 @@ onMounted(()=>{
         </div> 
         <div class="row justify-content-start ">
         <div class="col-4">
-            <p>Foto Secundaria</p>
+          
              <img :src="knowPhoto(1)"  alt="" class="col-12">
         <div v-if="v$.foto2.$error" >  
             <span v-if="v$.foto2.required.$invalid">La foto principal es requerida</span>
@@ -183,7 +186,7 @@ onMounted(()=>{
         </div>
         </div> 
         <div class="col-4">
-            <p>Foto secundaria</p>
+           
             <img :src="knowPhoto(2)" alt="" class="col-12">
             <div v-if="v$.foto3.$error" >  
                 <span v-if="v$.foto3.required.$invalid">La foto principal es requerida</span>
@@ -191,7 +194,6 @@ onMounted(()=>{
             </div>
         </div> 
 <div class="col-4">
-<p>Foto secundaria</p>
 <div v-if="v$.foto4.$error" >  
   <span v-if="v$.foto4.required.$invalid">La foto principal es requerida</span>
      
@@ -201,55 +203,54 @@ onMounted(()=>{
 </div>        
 
         </div>    
-
-       
-
-
-
-
-
-            <div>
-                <div v-if="v$.marca.$error"> 
+ <div class="col-md-6">
+<div class="form-row">
+    <div class="form-group col-md-6">
+    <div v-if="v$.marca.$error"> 
                   <span v-if="v$.marca.required.$invalid">La Marca es requerida</span>
                   <span v-if="v$.marca.minLength.$invalid">Minimo 6 letras</span>      
                 </div>
 
 
-                <label for="">Marca</label>
-                <input  v-model="form.marca"> 
-            </div>
-            <div>
-                <div v-if="v$.modelo.$error" >  
-                  <span v-if="v$.modelo.required.$invalid">El modelo es requerida</span>
-                  <span v-if="v$.modelo.minLnegth.$invalid">Minimo 6 letras</span>      
-                </div>     
-                <label for="">Modelo</label>
-                <input  v-model="form.modelo"> 
+    <label for="">Marca</label>
+    <input class="form-control" placeholder="Marca" v-model="form.marca"> 
+    </div>
+    <div  class="form-group col-md-6">
+     <div v-if="v$.modelo.$error" >  
+            <span v-if="v$.modelo.required.$invalid">El modelo es requerida</span>
+            <span v-if="v$.modelo.minLnegth.$invalid">Minimo 6 letras</span>      
+     </div>     
+            <label for="">Modelo</label>
+            <input class="form-control" placeholder="Modelo"  v-model="form.modelo"> 
                 
-            </div>
-            <div>
+      </div>
+</div>            
+<div class="form-row">
+    <div  class="form-group col-md-6">
                 <div v-if="v$.modelo.$error" >  
-                  <span v-if="v$.placa.required.$invalid">El modelo es requerido </span>
+                  <span v-if="v$.placa.required.$invalid">La placa es requerida </span>
                   <span v-if="v$.placa.minLnegth.$invalid">Minimo 6 letras</span>      
                 </div>
                 <label for="">Placa</label>
-                <input  v-model="form.placa"> 
+                <input class="form-control" placeholder="Placa" v-model="form.placa"> 
             </div>
-            <div>
+    <div  class="form-group col-md-6">
                 <div v-if="v$.color.$error" >  
                   <span v-if="v$.color.required.$invalid">El color es requerido </span>
                   <span v-if="v$.color.minLnegth.$invalid">Minimo 4 letras </span>      
                 </div>
                 <label for="">Color</label>
-                <input  v-model="form.color"> 
+                <input class="form-control" placeholder="Color"  v-model="form.color"> 
             </div>
-            <div>
-                <div v-if="v$.estado.$error" >  
+</div>            
+<div class="form-row">
+    <div class="form-group col-md-12">
+      <div v-if="v$.estado.$error" >  
                   <span v-if="v$.estado.required.$invalid">El estado es requerido</span>
                     
                 </div>
                 <label for="">estado</label>
-                <select name="" id="" v-model="form.estado">
+                <select name="" id="" class="form-control" v-model="form.estado">
                    <option disabled value="">Seleccione un elemento</option>
                    <option value="Activo">Activo</option>
                    <option value="Inactivo">Inactivo</option>
@@ -257,13 +258,15 @@ onMounted(()=>{
                 </select>   
                  
 
-            </div>
-            <div>
+    </div>
+</div>           
+<div class="form-row">
+    <div class="form-group col-md-6">
                 <div v-if="v$.tipo.$error" >  
                   <span v-if="v$.tipo.required.$invalid">El Tipo es requerido</span>
                 </div>
                 <label for="">tipo</label>
-            <select  v-model="form.tipo">
+            <select class="form-control" v-model="form.tipo">
                    <option v-for="tipo in form.select_values" 
 
                    :value="tipo.nombre_tipo_vehiculo"> 
@@ -273,22 +276,27 @@ onMounted(()=>{
                    </option>
             </select>    
                  
-            </div>
-            <div> 
+    </div>
+    <div class="form-group col-md-6 "> 
                 <router-link to="/type"> 
-                    <button>Agregar Tipo</button>
+                    <button class="btn btn-primary ">Agregar Tipo</button>
               
                 </router-link>
                
-            </div>
+    </div>
+</div>           
+            
+          
+          
           
           
          
             <form action="">
             <label for="">Agrega una foto principal</label>
-            <input type="file"  @click="typeImg(0)" id="img_perfil" @change="updateImages">
+            <div id="attachment"><i class="fa fa-paperclip"></i></div>
+            <input id="file-input" type="file" style="display:none"   @click="typeImg(0)" @change="updateImages">
             </form>
-             
+              
             <form action="">
             <label for="">Agrega una foto secundaria</label>
           
@@ -311,6 +319,14 @@ onMounted(()=>{
             Subir
         </button>
         </div>
+
+
+        </div>
+       
+
+
+
+
         
     </div>
     
