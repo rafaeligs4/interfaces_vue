@@ -59,11 +59,16 @@ onMounted(async () => {
 <template>
     <div class="container">
      
-
-        <button @click="generatePDF()" >
-PDF
-        </button>
-        <table  id="table_id" class="display table"> 
+        <div class="d-flex justify-content-center">
+            <h1>Tabla de Autos</h1>
+        </div>
+        <div class="d-flex justify-content-end m-1">
+            <button class="btn btn-danger" @click="generatePDF()" >
+            PDF<i class="fas fa-file-pdf m-1"></i>
+            </button>
+        </div>
+       
+        <table  id="table_id" class="table table-striped principal rounded"> 
             <thead>
             <tr>
                 <th id="row_head">Id  </th>
@@ -84,18 +89,22 @@ PDF
             <td id="row_placa" class=""> {{car.placa}}</td>
             <td id="row_estado" class=""> {{car.estado}}</td> 
            <td>
-           <div class=""> 
-               <router-link :to='"/editcar/"+car.id'>Editar Carro </router-link>  
-            </div>       
+           
+        
+             <router-link :to='"/editcar/"+car.id'>
+                <button class="btn btn-dark">Editar Carro </button></router-link>  
+      
+           
+             
             
             </td>
             <td>
             <div class="">
-              <button @click="eliminarPerfil(car.id)">Eliminar perfil</button> 
+              <button class="btn btn-danger" @click="eliminarPerfil(car.id)">Eliminar perfil</button> 
             </div> 
             </td>  
             <td>
-                <select name="" id="" v-model="car.estado" @change="changeState(car.id,car.estado)">
+                <select name="" id="" v-model="car.estado"  class="form-control" @change="changeState(car.id,car.estado)">
                    <option value="Activo">Activo</option>
                    <option value="Inactivo">Inactivo</option>
                    <option value="Alquilado">Alquilado</option>  

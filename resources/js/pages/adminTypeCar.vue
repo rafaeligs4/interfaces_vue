@@ -29,8 +29,8 @@ const changeState = (id,estado) =>{
     axios.post('/api/type/state/'+id,formdata) 
     .then(response=>{
         console.log(response.data);
+        getTypes();
     }); 
-    all_cars();
 };
 onMounted(()=>{
      
@@ -41,10 +41,10 @@ onMounted(()=>{
  
 <template>
 <h1>Editar tipos de vehiculos</h1>
-<table  id="table_id" class="display table"> 
+<table  id="table_id" class="table table-striped principal"> 
             <thead>
             <tr>
-                <th id="row_head">Id  </th>
+                <th id="row_head " >Id  </th>
                 <th id="row_head">Nombre Tipo de Vehiculo</th>
                 <th id="row_head">Estado</th> 
                
@@ -57,21 +57,28 @@ onMounted(()=>{
         <tr v-for="car in typeCars"> 
             <td  class="">{{car.id}} </td>
             <td  class="">{{car.nombre_tipo_vehiculo}} </td>
-            <td  class=""> {{car.estado}}</td> 
+            <td  class=""> 
+                <p v-if="(car.estado)">Activo
+                </p>
+                <p v-else> Inactivo</p>
+            </td> 
            
            <td>
-           <div class=""> 
-               <router-link :to='"/editcartype/"+car.id'>Editar Carro </router-link>  
-            </div>       
-            
+          
+               <router-link :to='"/editcartype/"+car.id'>
+                <button class="btn btn-dark">
+                    Editar Carro 
+                </button>
+                </router-link>  
+               
             </td>
             <td>
             <div class="">
-              <button @click="eliminarPerfil(car.id)">Eliminar perfil</button> 
+              <button class="btn btn-danger" @click="eliminarPerfil(car.id)">Eliminar perfil</button> 
             </div> 
             </td>  
             <td>
-                <select name="" id="" v-model="car.estado" @change="changeState(car.id,car.estado)">
+                <select name="" id="" class="form-control" v-model="car.estado" @change="changeState(car.id,car.estado)">
                    <option value=true>Activo</option>
                    <option value=false>Inactivo</option>
                 </select> 

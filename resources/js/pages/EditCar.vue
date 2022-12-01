@@ -6,12 +6,13 @@ let valor = 0;
 let arr=[];  
 let pos1=0;
 let pos2=0;
+let error_array=[];
 //para identificar los tipos de imagen
 const typeImg= (id) =>{
     if(id==0){
         valor = 0;
     }else if(id==1){
-        valor = 1;
+        valor = 1; 
     }
     else if(id==2){
         valor = 2;
@@ -19,6 +20,18 @@ const typeImg= (id) =>{
     else if(id==3){
         valor = 3;
     }
+}
+const sub1 = () =>{
+    document.getElementById("file-input").click();
+} 
+const sub2 = () =>{
+    document.getElementById("file-in2").click();
+}
+const sub3 = () =>{
+    document.getElementById("file-in3").click();
+}
+const sub4 = () =>{
+    document.getElementById("file-in4").click();
 }
 const props=defineProps({
     id:{
@@ -59,14 +72,111 @@ const getP= async () => {
     form.value.foto2,
     form.value.foto3,
     form.value.foto4,
-    ];    
-    
- 
-   
-  
-   
+    ];      
 } 
+const showErrors = (error)=>{
+    
+    if(error.marca != null){
+    let doc,
+    textdoc;
+    let error_msg;
+        doc=document.getElementById("id_marca");
+        textdoc=document.getElementById("msg_marca");
+        error_msg=error.marca[0];
+        doc.classList.add("is-invalid");
+        textdoc.classList.add("invalid-feedback");
+        textdoc.textContent=error_msg; 
+    }
+    if(error.modelo!= null){
+    let doc,
+    textdoc;
+    let error_msg;
+        doc=document.getElementById("id_modelo");
+        textdoc=document.getElementById("msg_modelo");
+        error_msg=error.modelo[0];
+        doc.classList.add("is-invalid");
+        textdoc.classList.add("invalid-feedback");
+        textdoc.textContent=error_msg; 
+    }
+    if(error.placa != null){
+    let doc,
+    textdoc;
+    let error_msg;
+        doc=document.getElementById("id_placa");
+        textdoc=document.getElementById("msg_placa");
+        error_msg=error.placa[0];
+        doc.classList.add("is-invalid");
+        textdoc.classList.add("invalid-feedback");
+        textdoc.textContent=error_msg; 
+    }
+    if(error.color != null){
+    let doc,
+    textdoc;
+    let error_msg;
+        doc=document.getElementById("id_color");
+        textdoc=document.getElementById("msg_color");
+        error_msg=error.color[0];
+        doc.classList.add("is-invalid");
+        textdoc.classList.add("invalid-feedback");
+        textdoc.textContent=error_msg; 
+    }
+    if(error.estado != null){
+    let doc,
+    textdoc;
+    let error_msg;
+        doc=document.getElementById("id_estado");
+        textdoc=document.getElementById("msg_estado");
+        error_msg=error.estado[0];
+        doc.classList.add("is-invalid");
+        textdoc.classList.add("invalid-feedback");
+        textdoc.textContent=error_msg; 
+    }
+    if(error.tipo != null){
+    let doc,
+    textdoc;
+    let error_msg;
+        doc=document.getElementById("id_tipo");
+        textdoc=document.getElementById("msg_tipo");
+        error_msg=error.tipo[0];
+        doc.classList.add("is-invalid");
+        textdoc.classList.add("invalid-feedback");
+        textdoc.textContent=error_msg;
+    }
+       
+}
+const error_quitar = (id) =>{
+    let doc,
+    textdoc;
+    if(id==0){
+        doc = document.getElementById("id_marca");
+        textdoc= document.getElementById("msg_marca");
+    }else if(id==1){
+        doc = document.getElementById("id_modelo");
+        textdoc= document.getElementById("msg_modelo");
+    }
+    else if(id==2){
+        doc = document.getElementById("id_placa");
+        textdoc= document.getElementById("msg_placa");
+    }
+    else if(id==3){
+        doc = document.getElementById("id_color");
+        textdoc= document.getElementById("msg_color");
+    }
+    else if(id==4){
+        doc = document.getElementById("id_estado");
+        textdoc= document.getElementById("msg_estado");
+    }
+    else if(id==5){
+        doc = document.getElementById("id_tipo");
+        textdoc= document.getElementById("msg_tipo");
+    }
+    if(doc.classList.contains("is-invalid")){
+        doc.classList.remove("is-invalid");
+        textdoc.classList.remove("invalid-feedback");
+        textdoc.textContent="";
 
+    }
+}
 const uploadData= () => {
     console.log("sending");
     const formdata=new FormData();
@@ -86,6 +196,9 @@ const uploadData= () => {
     })
     .catch((error)=>{
         console.log(error.response)
+        error_array=error.response.data.error;
+        showErrors(error_array);
+
     })
     ; 
 }
@@ -102,7 +215,7 @@ const knowPhoto = (numero) =>{
     else if(numero==3){ 
         img=form.value.foto4;
     }  
-    let photo = "/photo/usuario.svg";
+    let photo = "/photo/image.png";
     if( img!= "" ){
         if(img.indexOf('base64') != -1){
             photo=img; 
@@ -147,27 +260,42 @@ const getTypes= async () =>{
         
    }); 
 }
+const seleCheck = (id) =>{
+    if(id<4){
+        document.getElementById('att-'+id).classList.replace("btn-primary","btn-danger");
+    
+       
+    }
+    else if(id == 5){
+        let num=pos1-1,
+        num2=pos2-1;
+        document.getElementById('att-'+num).classList.replace("btn-danger","btn-primary");
+        document.getElementById('att-'+num2).classList.replace("btn-danger","btn-primary");
+    }
+}
+
 const selecPhotos = (el)=>{
     console.log(arr);
     console.log(el);
     if(pos1 == 0){
+        seleCheck(el);
         pos1 = el+1;
     }
     else if(pos2 == 0){
+        seleCheck(el);
        pos2 = el+1;
     }
     else if(pos1 == pos2){
         pos1=0;
         pos2=0;
         console.log('reset');
+        return false;
     } 
-    else if(pos1 != 0 && pos2 != 0){
+    if(pos1 != 0 && pos2 != 0){
       console.log(pos1 );
-
       console.log(pos2 ); 
-      console.log(arr); 
+      seleCheck(5);
         let auxval="";
-       arr[pos1-1]; 
         auxval=arr[pos1-1];
         arr[pos1-1]= arr[pos2-1];
         arr[pos2-1]=auxval; 
@@ -198,106 +326,160 @@ onMounted(()=>{
 </script> 
 <template>
     <h1>Hola</h1>
-    <div class="container">
-        <div>
-            <h1>Crear Auto </h1> 
-        </div>
-        <div class="card">
-            <div>
-                <label for="">Marca</label>
-                <input  v-model="form.marca"> 
+    <div class="container">        
+        <div class="row">
+            <div class="col-md-6 ">
+            <div class="d-flex justify-content-center">
+            <div class="btn btn-primary m-1" @click="sub1()" ><i class="fa fa-paperclip"></i></div>
+            <div @click="selecPhotos(0)" class="btn btn-primary m-1" id="att-0"><i  class="fa fa-check"  aria-hidden="true"></i></div>
             </div>
-            <div>
-                <label for="">Modelo</label>
-                <input  v-model="form.modelo"> 
+           
+            <div class="col-md-12 d-flex justify-content-center m-3">
+           
+                <div class="col-12 ">
+                <img :src="knowPhoto(0)"  alt="" class="img-fluid">
+              </div>
+            </div> 
+            <div class="row ">
+            <div class="col-4">
+                <div class="col-12 ">
+                <img :src="knowPhoto(1)"  alt="" class="img-fluid">
+                <div class="d-flex justify-content-center">
+                <div class="btn btn-primary m-1" @click="sub2()" ><i class="fa fa-paperclip"></i></div>
+                <div @click="selecPhotos(1)" class="btn btn-primary m-1" id="att-1"><i  class="fa fa-check"  aria-hidden="true"></i></div>
+                </div>
+               
             </div>
-            <div>
-                <label for="">Placa</label>
-                <input  v-model="form.placa"> 
+            </div> 
+            <div class="col-4">
+                <div class="col-12 ">
+                <img :src="knowPhoto(2)"  alt="" class="img-fluid">
+                <div class="d-flex justify-content-center">
+                <div class="btn btn-primary m-1" @click="sub3()"><i class="fa fa-paperclip"></i></div>
+                <div @click="selecPhotos(2)" class="btn btn-primary m-1"  id="att-2"><i  class="fa fa-check"  aria-hidden="true"></i></div>
+                </div>
+             
             </div>
-            <div>
-                <label for="">Color</label>
-                <input  v-model="form.color"> 
+            </div> 
+            <div class="col-4">
+                <div class="col-12 ">
+                <img :src="knowPhoto(3)"  alt="" class="img-fluid">
+                <div class="d-flex justify-content-center">
+                    <div class="btn btn-primary m-1" @click="sub4()" ><i class="fa fa-paperclip"></i></div>
+                    <div @click="selecPhotos(3)" class="btn btn-primary m-1" id="att-3"><i  class="fa fa-check"  aria-hidden="true"></i></div>
+                </div>
+               
+                </div>
             </div>
-            <div>
-                <label for="">estado</label>
-                <select name="" id="" v-model="form.estado">
-                   <option value="Activo">Activo</option>
-                   <option value="Inactivo">Inactivo</option>
-                   <option value="Alquilado">Alquilado</option>  
-                </select>   
-                 
+            </div>
+             
+            </div>
+            <div class="col-md-6  rounded">
+                <div class="">
+                    <h2>Agregar los datos a editar</h2>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="">Marca</label>
+                        <input id="id_marca" class="form-control" @click="error_quitar(0)"  v-model="form.marca"> 
+                        <div id="msg_marca">
 
-            </div>
-            <div>
+                        </div>
+                    </div>
+                    <div  class="form-group col-md-6"> 
+                        <label for="">Modelo</label>
+                        <input  id="id_modelo" class="form-control" @click="error_quitar(1)" v-model="form.modelo"> 
+                        <div id="msg_modelo">
+
+                        </div>
+                    </div>
+                </div> 
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="">Placa</label>
+                        <input id="id_placa" class="form-control" @click="error_quitar(2)"  v-model="form.placa"> 
+                        <div id="msg_placa">
+
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="">Color</label>
+                        <input id="id_color" class="form-control" @click="error_quitar(3)" v-model="form.color"> 
+                        <div id="msg_color">
+
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="">estado</label>
+                        <select  id="id_estado" class="form-control" @click="error_quitar(4)" name="" v-model="form.estado">
+                            <option value="Activo">Activo</option>
+                            <option value="Inactivo">Inactivo</option>
+                            <option value="Alquilado">Alquilado</option>  
+                        </select> 
+                        <div id="msg_estado">
+
+                        </div>
+                    </div>  
+                    
+                    
+
+                </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
                 <label for="">tipo</label>
-            <select  v-model="form.tipo">
-                   <option v-for="tipo in form.select_values" 
+                    <select id="id_tipo" class="form-control" @click="error_quitar(5)" v-model="form.tipo">
+                    <option v-for="tipo in form.select_values" 
 
                    :value="tipo.nombre_tipo_vehiculo"> 
                    
                    {{tipo.nombre_tipo_vehiculo}} 
                    
                    </option>
-            </select>    
-                 
-            </div>
-            <div> 
-                <router-link to="/type"> 
-                    <button>Agregar Tipo</button>
-              
-                </router-link>
-               
-            </div>
-          
-          <div class="">
-                <p>Foto principal</p>
-                <img :src="knowPhoto(0)" alt="" class="col-2 " >
-            </div> 
-            <div class="">
-                <p>Foto Secundaria</p>
-                <img :src="knowPhoto(1)"  alt="" class="col-2 w-50">
-            </div> 
-            <div class="">
-                <p>Foto secundaria</p>
-                <img :src="knowPhoto(2)" alt="" class="col-2 w-50">
-            </div> 
-            <div class="">
-                <p>Foto secundaria</p>
-                <img :src="knowPhoto(3)"  alt="" class="col-2 w-50"> 
-            </div> 
-            
-            <button @click="selecPhotos(0)" >Cambiar posicion</button>
-            <form action="">
-            <label for="">Agrega una foto principal</label>
-            <input type="file"  @click="typeImg(0)" id="img_perfil" @change="updateImages">
-           
-            </form>
-            <button  @click="selecPhotos(1)" >Cambiar posicion</button>
-            <form action="">
-            <label for="">Agrega una foto secundaria</label>
-          
-            <input type="file"  @click="typeImg(1)" id="img_perfil" @change="updateImages" >
-           
-            </form>
-            <button  @click="selecPhotos(2)" >Cambiar posicion</button>
-            <form action="">
-            <label for="">Agrega una foto secundaria</label>
+                     </select>  
+                     <div id="msg_tipo">
 
-            <input type="file"  @click="typeImg(2)" id="img_perfil" @change="updateImages" >
-          
-            </form>
-            <button  @click="selecPhotos(3)" >Cambiar posicion</button>
-            <form action="">
-            <label for="">Agrega una foto secundaria</label>
-          
-            <input type="file"  @click="typeImg(3)" id="img_perfil" @change="updateImages">
+                    </div> 
+                </div>
+              
+            <div class="form-group col-md-6 d-flex align-items-end ">
+                 <router-link to="/type"> 
+                    <button class="btn btn-primary ">Agregar Tipo</button>
+                 </router-link>
+            </div>   
+            </div>
+            
+            <div class="d-flex justify-content-center">
+            <button class="btn btn-primary" v-on:click="uploadData()">
+            Realizar Cambios
+            </button>
+            </div>
+
            
+            </div>
+           
+          
+            
+           
+           
+            <form action="">
+            <input type="file" style="display:none"  @click="typeImg(0)" id="file-input" @change="updateImages">
+           
+            </form>
+         
+            <form action="">
+            <input type="file"  style="display:none" @click="typeImg(1)" id="file-in2" @change="updateImages" >
+            </form>
+            <form action="">
+            <input type="file" style="display:none"  @click="typeImg(2)" id="file-in3" @change="updateImages" >
+            </form>
+            <form action="">
+            <input type="file" style="display:none"  @click="typeImg(3)" id="file-in4" @change="updateImages">
             </form>  
             
-        <button class="button" v-on:click="uploadData()">
-            Subir
-        </button>
+          
         </div>
         
     </div>

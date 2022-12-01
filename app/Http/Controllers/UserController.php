@@ -14,12 +14,11 @@ class UserController extends Controller
     public function view($id){
       $user = User::find($id);
       return response()->json([
-        'user'=>$user,200
-      ]);
+        'user'=>$user,200]); 
     }
-    public function update(Request $request, $id){
+    public function update(Request $request, $id){  
       $user = User::find($id);
-    //  return response()->json(['error'=>$request->foto_perfil]);    
+    
      $date_today=Carbon::now();      
       $date=Carbon::now();
       $validate=Validator::make($request->all(),
@@ -29,23 +28,22 @@ class UserController extends Controller
         'cedula'=>['required','unique:users,cedula,'.$user->cedula,'min:4','max:10'],
          'no_licencia'=>['required','unique:users,no_licencia,'.$user->no_licencia,'min:4','max:10'],
          'fecha_nac'=>['required','before_or_equal:'.$date_today->subYears(18)->format('y-m-d')],
-         'fecha_venc'=>['required','after_or_equal:'.$date->format('y-m-d')],
-         'foto_perfil'=>['required','image'],
-         'foto_lic'=>['required','image'], 
-      ] 
-       
+         'fecha_venc'=>['required','after_or_equal:'.$date->format('y-m-d')]
+      ]   
     );
+     
     if ($validate->fails()) {
-      return response()->json(['error'=>$validate->errors()]);                  
+      return response()->json(['error'=>$validate->errors()],422);                  
     }
 
-
+   
       $user->name= $request->name ?? $user->name ?? null; 
       $user->apellido = $request->apellido ?? $user->apellido  ?? null;
       $user->cedula = $request->cedula ?? $user->cedula ?? null;
       $user->no_licencia  =$request->no_licencia ??  $user->no_licencia ?? null;
       $user->fecha_nac = $request->fecha_nac ??  $user->fecha_nac ?? null;
       $user->fecha_venc = $request->fecha_venc ?? $user->fecha_venc ?? null;
+
       if($user->foto_perfil != $request->foto_perfil){
     
          $strpos= strpos($request->foto_perfil,';');
@@ -69,6 +67,7 @@ class UserController extends Controller
         $user->foto_licencia = $name ?? $user->foto_licencia ?? null; 
       }
         $user->save();    
+
       }
    public function get_users(){
         $users = User::all();
@@ -78,7 +77,6 @@ class UserController extends Controller
    }
    public function delete($id){
       $user = User::findOrFail($id);
-      
       $imagen_P=public_path()."/photo/".$user->foto_perfil;
       $imagen_L=public_path()."/photo/".$user->foto_licencia;
       if(file_exists($imagen_P)){

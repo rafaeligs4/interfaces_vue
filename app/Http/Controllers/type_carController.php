@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\type_car;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class type_carController extends Controller
 {
@@ -46,11 +47,18 @@ class type_carController extends Controller
    }
    public function upload_type($id,Request $request){
     $tcar= type_car::find($id); 
+    $validate=Validator::make($request->all(),
+        [
+          'nombre_tipo_vehiculo'=>['required','min:6','max:30'],
+        ]   
+      );
+      if ($validate->fails()) {
+        return response()->json(['error'=>$validate->errors()],422);                  
+      }  
     $tcar->nombre_tipo_vehiculo = $request->nombre_tipo_vehiculo;
     $tcar->save();
     return response()->json(['message'=>'listo']);
-
-   }
+   } 
    public function delete($id){
     $tcar = type_car::findOrFail($id);
     $tcar->delete();    
@@ -67,6 +75,6 @@ class type_carController extends Controller
     $tcar->estado = $estado; 
     $tcar->save();
     return response()->json(['message'=>'listo']); 
-} 
+   } 
    
 }

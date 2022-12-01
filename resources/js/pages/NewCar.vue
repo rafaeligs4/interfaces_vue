@@ -8,9 +8,22 @@ import useValidate from '@vuelidate/core';
 import {required,email,minLength} from '@vuelidate/validators';
 import { onMounted, ref } from 'vue';
 
-document.getElementById("attachment").addEventListener('click', function() {
+
+const sub = () =>{
     document.getElementById("file-input").click();
-});
+} 
+const sub2 = () =>{
+    document.getElementById("file-in2").click();
+}
+const sub3 = () =>{
+    document.getElementById("file-in3").click();
+}
+const sub4 = () =>{
+    document.getElementById("file-in4").click();
+}
+// document.getElementById("attachment").addEventListener('click', function() {
+
+// });
 
 
 let valor = 0;
@@ -65,7 +78,9 @@ const getP= async () => {
 
 const uploadData= () => {
     console.log("sending");
+
     const formdata=new FormData();
+    if(validateData()){
     formdata.append('marca',form.value.marca);
     formdata.append('modelo',form.value.modelo);
     formdata.append('color',form.value.color);
@@ -84,12 +99,16 @@ const uploadData= () => {
         console.log(error.response)
     })
     ; 
+    }
+    else{
+        console.log("error"); 
+    }
+    
 }
 const knowPhoto = (numero) =>{
     let img="";
     if(numero==0){
         img=form.value.foto1;
-    
     }else if(numero==1){
         img=form.value.foto2;
     }else if(numero==2){
@@ -98,7 +117,7 @@ const knowPhoto = (numero) =>{
     else if(numero==3){ 
         img=form.value.foto4;
     }  
-    let photo = "/photo/image.svg";
+    let photo = "/photo/image.png";
     if( img!= "" ){
         if(img.indexOf('base64') != -1){
             photo=img; 
@@ -136,18 +155,138 @@ const updateImages = (e) => {
     reader.readAsDataURL(file); 
 } 
 const validateData = ()=>{
-  submitted = true;
-  submitted2= true;
+
  
   v$.value.$validate();
  if(v$.value.$error){
-    console.log('Incorrecto');
-
+   if(v$.value.marca.$error){
+        let error_marca = "";
+        if(v$.value.marca.required.$invalid){
+            console.log("sdas");
+           error_marca="El campo Marca es requerido";
+           
+        }else if(v$.value.marca.minLength.$invalid){
+             error_marca="Minimo 6 letras";
+             console.log(error_marca);
+        }
+        document.getElementById("id_marca").classList.add("is-invalid");
+        let d_m;
+        d_m =document.getElementById("msg_marca");
+        d_m.classList.add("invalid-feedback");
+        d_m.textContent=error_marca;
+   }
+   if(v$.value.modelo.$error){
+        let error_modelo = "";
+        if(v$.value.modelo.required.$invalid){
+            console.log("sdas");
+           error_modelo="El campo Modelo es requerido";
+           
+        }else if(v$.value.modelo.minLength.$invalid){
+             error_modelo="Minimo 4 letras";
+             console.log(error_modelo);
+        }
+        document.getElementById("id_modelo").classList.add("is-invalid");
+        let d_m;
+        d_m =document.getElementById("msg_modelo");
+        d_m.classList.add("invalid-feedback");
+        d_m.textContent=error_modelo;
+   }
+   if(v$.value.placa.$error){
+        let error_placa= "";
+        if(v$.value.placa.required.$invalid){
+            console.log("sdas");
+           error_placa="El campo Placa es requerido";
+           
+        }else if(v$.value.placa.minLnegth.$invalid){
+             error_placa="Minimo 6 letras";
+             console.log(error_placa);
+        }
+        document.getElementById("id_placa").classList.add("is-invalid");
+        let d_m;
+        d_m =document.getElementById("msg_placa");
+        d_m.classList.add("invalid-feedback");
+        d_m.textContent=error_placa;
+   } 
+   if(v$.value.color.$error){
+        let error_color= "";
+        if(v$.value.color.required.$invalid){
+            console.log("sdas");
+           error_color="El campo Color es requerido";
+           
+        }else if(v$.value.color.minLength.$invalid){
+             error_color="Minimo 4 letras";
+             console.log(error_color);
+        }
+        document.getElementById("id_color").classList.add("is-invalid");
+        let d_m;
+        d_m =document.getElementById("msg_color");
+        d_m.classList.add("invalid-feedback");
+        d_m.textContent=error_color; 
+   }
+   if(v$.value.estado.$error){
+        let error_placa= "";
+        if(v$.value.estado.required.$invalid){
+            console.log("sdas"); 
+           error_placa="El campo del Estado es requerido";
+           
+        }
+        document.getElementById("id_estado").classList.add("is-invalid");
+        let d_m;
+        d_m =document.getElementById("msg_estado");
+        d_m.classList.add("invalid-feedback");
+        d_m.textContent=error_placa;
+   }
+   if(v$.value.tipo.$error){
+        let error_placa= "";
+        if(v$.value.tipo.required.$invalid){
+            console.log("sdas"); 
+           error_placa="El campo del Tipo es requerido";
+           
+        }
+        document.getElementById("id_tipo").classList.add("is-invalid");
+        let d_m;
+        d_m =document.getElementById("msg_tipo");
+        d_m.classList.add("invalid-feedback");
+        d_m.textContent=error_placa;
+   } 
+   return false;
  }else{
-    console.log('Correcto'); 
+   return true;
  }
 };
+const error_quitar = (id) =>{
+    let doc,
+    textdoc;
+    if(id==0){
+        doc = document.getElementById("id_marca");
+        textdoc= document.getElementById("msg_marca");
+    }else if(id==1){
+        doc = document.getElementById("id_modelo");
+        textdoc= document.getElementById("msg_modelo");
+    }
+    else if(id==2){
+        doc = document.getElementById("id_placa");
+        textdoc= document.getElementById("msg_placa");
+    }
+    else if(id==3){
+        doc = document.getElementById("id_color");
+        textdoc= document.getElementById("msg_color");
+    }
+    else if(id==4){
+        doc = document.getElementById("id_estado");
+        textdoc= document.getElementById("msg_estado");
+    }
+    else if(id==5){
+        doc = document.getElementById("id_tipo");
+        textdoc= document.getElementById("msg_tipo");
+    }
+    if(doc.classList.contains("is-invalid")){
+        doc.classList.remove("is-invalid");
+        textdoc.classList.remove("invalid-feedback");
+        textdoc.textContent="";
 
+    }
+}
 const getTypes= async () =>{
    let value = axios.get('/api/get_types_cars')
    .then((response)=>{ 
@@ -164,109 +303,101 @@ onMounted(()=>{
 </script> 
 <template>    
     <div class="container">
-        <div>
+         
+        <div class="">
             <h1>Crear Auto </h1> 
         </div>
-        <div class="row">
-        <div class="col-6 flex justify-content-center">
-        <div class="col-md-12">      
-        <img :src="knowPhoto(0)" alt="" class="col-7" >
-        <div v-if="v$.foto1.$error" >  
-        <span v-if="v$.foto1.required.$invalid">La foto principal es requerida </span>     
-        </div>   
-
-        </div> 
-        <div class="row justify-content-start ">
+        <div class="row ">
+        <div class="col-6 ">
+        <div class="btn btn-primary" @click="sub()" id="attachment"><i class="fa fa-paperclip"></i> Agrega una imagen</div>
+        <div class="col-md-12 image d-flex justify-content-center m-3">      
+        <img :src="knowPhoto(0)" alt="" style="width: 100% \9; " class="p-0 col-md-8" >
+        </div>  
+    <div class="row ">
         <div class="col-4">
-          
-             <img :src="knowPhoto(1)"  alt="" class="col-12">
-        <div v-if="v$.foto2.$error" >  
-            <span v-if="v$.foto2.required.$invalid">La foto principal es requerida</span>
-     
-        </div>
-        </div> 
-        <div class="col-4">
+              
+                <div class="col-12 m-1">
+                <img :src="knowPhoto(1)"  alt="" class="img-fluid"> 
+                </div>
            
-            <img :src="knowPhoto(2)" alt="" class="col-12">
-            <div v-if="v$.foto3.$error" >  
-                <span v-if="v$.foto3.required.$invalid">La foto principal es requerida</span>
-     
-            </div>
-        </div> 
-<div class="col-4">
-<div v-if="v$.foto4.$error" >  
-  <span v-if="v$.foto4.required.$invalid">La foto principal es requerida</span>
-     
-</div>
-<img :src="knowPhoto(3)"  alt="" class="col-12"> 
-</div> 
-</div>        
+             
 
+             <div class="btn btn-primary" @click="sub2()" id="att-2"><i class="fa fa-paperclip"></i>Agrega una imagen</div>       
+        </div> 
+        <div class="col-4">
+            <div class="col-12 m-1">
+                <img :src="knowPhoto(2)"  alt="" class="img-fluid"> 
+            </div>
+            <div class="btn btn-primary" @click="sub3()" id="att-3"><i class="fa fa-paperclip"></i>Agrega una imagen</div> 
+        </div> 
+        <div class="col-4">
+            <div class="col-12 m-1">
+                <img :src="knowPhoto(3)"  alt="" class="img-fluid"> 
+            </div>
+           
+            <div class="btn btn-primary" @click="sub4()" id="att-4"><i class="fa fa-paperclip"></i>Agrega una imagen</div>  
+        </div> 
+    </div>        
+ 
         </div>    
  <div class="col-md-6">
 <div class="form-row">
     <div class="form-group col-md-6">
-    <div v-if="v$.marca.$error"> 
-                  <span v-if="v$.marca.required.$invalid">La Marca es requerida</span>
-                  <span v-if="v$.marca.minLength.$invalid">Minimo 6 letras</span>      
-                </div>
-
-
+   
+   
     <label for="">Marca</label>
-    <input class="form-control" placeholder="Marca" v-model="form.marca"> 
+    <input class="form-control" placeholder="Marca" id="id_marca" @click="error_quitar(0)" v-model="form.marca"> 
+    <div id="msg_marca" class="">
+    </div>
     </div>
     <div  class="form-group col-md-6">
-     <div v-if="v$.modelo.$error" >  
-            <span v-if="v$.modelo.required.$invalid">El modelo es requerida</span>
-            <span v-if="v$.modelo.minLnegth.$invalid">Minimo 6 letras</span>      
-     </div>     
-            <label for="">Modelo</label>
-            <input class="form-control" placeholder="Modelo"  v-model="form.modelo"> 
-                
+       
+            <label  for="">Modelo</label>
+            <input class="form-control " id="id_modelo" placeholder="Modelo" @click="error_quitar(1)"  v-model="form.modelo"> 
+            <div id="msg_modelo" >   
+            
+            </div>   
       </div>
 </div>            
 <div class="form-row">
     <div  class="form-group col-md-6">
-                <div v-if="v$.modelo.$error" >  
-                  <span v-if="v$.placa.required.$invalid">La placa es requerida </span>
-                  <span v-if="v$.placa.minLnegth.$invalid">Minimo 6 letras</span>      
-                </div>
+               
                 <label for="">Placa</label>
-                <input class="form-control" placeholder="Placa" v-model="form.placa"> 
+                <input class="form-control" id="id_placa" placeholder="Placa" @click="error_quitar(2)" v-model="form.placa"> 
+                <div id="msg_placa" >  
+                  
+                </div>
             </div>
     <div  class="form-group col-md-6">
-                <div v-if="v$.color.$error" >  
-                  <span v-if="v$.color.required.$invalid">El color es requerido </span>
-                  <span v-if="v$.color.minLnegth.$invalid">Minimo 4 letras </span>      
-                </div>
+                
                 <label for="">Color</label>
-                <input class="form-control" placeholder="Color"  v-model="form.color"> 
+                <input class="form-control" id="id_color" placeholder="Color" @click="error_quitar(3)"  v-model="form.color"> 
+                <div id="msg_color" >  
+                  
+                </div>
             </div>
 </div>            
 <div class="form-row">
     <div class="form-group col-md-12">
-      <div v-if="v$.estado.$error" >  
-                  <span v-if="v$.estado.required.$invalid">El estado es requerido</span>
-                    
-                </div>
+    
                 <label for="">estado</label>
-                <select name="" id="" class="form-control" v-model="form.estado">
+                <select name="" id="id_estado" class="form-control" @click="error_quitar(4)" v-model="form.estado">
                    <option disabled value="">Seleccione un elemento</option>
                    <option value="Activo">Activo</option>
                    <option value="Inactivo">Inactivo</option>
                    <option value="Alquilado">Alquilado</option>  
                 </select>   
                  
-
+                <div id="msg_estado">   
+                  
+                </div>
     </div>
 </div>           
 <div class="form-row">
     <div class="form-group col-md-6">
-                <div v-if="v$.tipo.$error" >  
-                  <span v-if="v$.tipo.required.$invalid">El Tipo es requerido</span>
-                </div>
+                
                 <label for="">tipo</label>
-            <select class="form-control" v-model="form.tipo">
+            <select id="id_tipo" class="form-control" @click="error_quitar(5)" v-model="form.tipo">
                    <option v-for="tipo in form.select_values" 
 
                    :value="tipo.nombre_tipo_vehiculo"> 
@@ -275,13 +406,17 @@ onMounted(()=>{
                    
                    </option>
             </select>    
+            <div id="msg_tipo" >  
+                 
+                </div>
                  
     </div>
-    <div class="form-group col-md-6 "> 
-                <router-link to="/type"> 
+    <div class="form-group col-md-6 d-flex align-items-end "> 
+        <router-link to="/type"> 
                     <button class="btn btn-primary ">Agregar Tipo</button>
               
                 </router-link>
+                
                
     </div>
 </div>           
@@ -292,32 +427,33 @@ onMounted(()=>{
           
          
             <form action="">
-            <label for="">Agrega una foto principal</label>
-            <div id="attachment"><i class="fa fa-paperclip"></i></div>
+         
+            
             <input id="file-input" type="file" style="display:none"   @click="typeImg(0)" @change="updateImages">
             </form>
               
             <form action="">
-            <label for="">Agrega una foto secundaria</label>
-          
-            <input type="file"  @click="typeImg(1)" id="img_perfil" @change="updateImages" >
+             
+         
+       
+            <input  type="file" style="display:none"  @click="typeImg(1)"  id="file-in2" @change="updateImages" >
             </form>
 
             <form action="">
-            <label for="">Agrega una foto secundaria</label>
-
-            <input type="file"  @click="typeImg(2)" id="img_perfil" @change="updateImages" >
+          
+ 
+            <input type="file" style="display:none" @click="typeImg(2)" id="file-in3" @change="updateImages" >
             </form>
             
-            <form action="">
-            <label for="">Agrega una foto secundaria</label>
-          
-            <input type="file"  @click="typeImg(3)" id="img_perfil" @change="updateImages">
+            <form action="">          
+            <input type="file"  style="display:none" @click="typeImg(3)"  id="file-in4"   @change="updateImages">
             </form> 
-            
-        <button class="button" v-on:click="validateData()">
-            Subir
+         <div class="d-flex justify-content-center">
+        <button class="btn btn-primary" v-on:click="uploadData()">
+            Crear Auto
         </button>
+         </div>   
+        
         </div>
 
 

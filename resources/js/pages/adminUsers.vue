@@ -26,16 +26,15 @@ const eliminarPerfil = (num) =>{
 <template>
     <div class="container">
  <h1>Administrar usuarios</h1>
- <table class="table bg-blue-dark texto-color">
+ <table class="table table-striped principal ">
         <thead>
             <tr>
-                <th>Nombre  </th>
-                <th>Apellido</th>
-                <th>Cedula</th>
-                <th>Estado</th>
-                <th>Ver Pefil</th>
-                <th>Editar Pefil</th>
-                <th>Eliminar Perfil</th>
+                <th >Nombre  </th>
+                <th >Apellido</th>
+                <th >Cedula</th>
+                <th >Estado</th>
+                <th >Editar Pefil</th>
+                <th >Eliminar Perfil</th>
             </tr>
         </thead>
         <tbody>
@@ -47,23 +46,24 @@ const eliminarPerfil = (num) =>{
 
         <tr v-for="user in users">
             <th>{{user.name}}</th>
-            <th class="" >{{user.apellido}}</th>
-            <th class=""  
+            <th  >{{user.apellido}}</th>
+            <th   
             >{{user.cedula}}</th>
-            <th> <form action="{{route('actualizar-estado',$user)}}" method="POST">
- 
-            <input class=""  type="submit" value="">   
-            </form>
+            <th>{{user.estado}}
             </th>
-            <th>
-            <div class="button-edit">
-               <router-link :to='"/edit/"+user.id'>Ver perfil </router-link>  
+            <th >
+            <div class="">
+                
+               <router-link :to='"/edit/"+user.id' >
+                <button class="btn btn-dark">
+                    Editar perfil
+                </button>
+                 </router-link>  
             </div>    
-            
             </th>
             <th>
-            <div class="button-edit">
-              <button @click="eliminarPerfil(user.id)">Eliminar perfil</button> 
+            <div class="">
+              <button  class="btn btn-danger" @click="eliminarPerfil(user.id)">Eliminar perfil</button> 
             </div> 
             </th>
             <th></th>

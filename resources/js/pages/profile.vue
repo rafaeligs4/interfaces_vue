@@ -83,7 +83,109 @@ const getP= async () => {
     console.log(response);
     form.value=response.data.user; 
 } 
-
+const showErrors = (error)=>{
+    
+    if(error.name != null){
+    let doc,
+    textdoc;
+    let error_msg;
+        doc=document.getElementById("id_name");
+        textdoc=document.getElementById("msg_name");
+        error_msg=error.name[0];
+        doc.classList.add("is-invalid");
+        textdoc.classList.add("invalid-feedback");
+        textdoc.textContent=error_msg; 
+    }
+    if(error.apellido!= null){
+    let doc,
+    textdoc;
+    let error_msg;
+        doc=document.getElementById("id_apellido");
+        textdoc=document.getElementById("msg_apellido");
+        error_msg=error.apellido[0];
+        doc.classList.add("is-invalid");
+        textdoc.classList.add("invalid-feedback");
+        textdoc.textContent=error_msg; 
+    }
+    if(error.cedula != null){
+    let doc,
+    textdoc;
+    let error_msg;
+        doc=document.getElementById("id_cedula");
+        textdoc=document.getElementById("msg_cedula");
+        error_msg=error.cedula[0];
+        doc.classList.add("is-invalid");
+        textdoc.classList.add("invalid-feedback");
+        textdoc.textContent=error_msg; 
+    }
+    if(error.no_licencia != null){
+    let doc,
+    textdoc;
+    let error_msg;
+        doc=document.getElementById("id_no_licencia");
+        textdoc=document.getElementById("msg_no_licencia");
+        error_msg=error.no_licencia[0];
+        doc.classList.add("is-invalid");
+        textdoc.classList.add("invalid-feedback");
+        textdoc.textContent=error_msg; 
+    }
+    if(error.fecha_nac != null){
+    let doc,
+    textdoc;
+    let error_msg;
+        doc=document.getElementById("id_fecha_nac");
+        textdoc=document.getElementById("msg_fecha_nac");
+        error_msg=error.fecha_nac[0];
+        doc.classList.add("is-invalid");
+        textdoc.classList.add("invalid-feedback");
+        textdoc.textContent=error_msg; 
+    }
+    if(error.fecha_venc != null){
+    let doc,
+    textdoc;
+    let error_msg;
+        doc=document.getElementById("id_fecha_venc");
+        textdoc=document.getElementById("msg_fecha_venc");
+        error_msg=error.fecha_venc[0];
+        doc.classList.add("is-invalid");
+        textdoc.classList.add("invalid-feedback");
+        textdoc.textContent=error_msg;
+    }
+       
+}
+const error_quitar = (id) =>{
+    let doc,
+    textdoc;
+    if(id==0){
+        doc = document.getElementById("id_name");
+        textdoc= document.getElementById("msg_name");
+    }else if(id==1){
+        doc = document.getElementById("id_apellido");
+        textdoc= document.getElementById("msg_apellido");
+    }
+    else if(id==2){
+        doc = document.getElementById("id_cedula");
+        textdoc= document.getElementById("msg_cedula");
+    }
+    else if(id==3){
+        doc = document.getElementById("id_no_licencia");
+        textdoc= document.getElementById("msg_no_licencia");
+    }
+    else if(id==4){
+        doc = document.getElementById("id_fecha_nac");
+        textdoc= document.getElementById("msg_fecha_nac");
+    }
+    else if(id==5){
+        doc = document.getElementById("id_fecha_venc");
+        textdoc= document.getElementById("msg_fecha_venc");
+    }
+    if(doc.classList.contains("is-invalid")){
+        doc.classList.remove("is-invalid");
+        textdoc.classList.remove("invalid-feedback");
+        textdoc.textContent="";
+ 
+    } 
+}
 const uploadData= () => {
  //   console.log(form.value.fecha_nac);
     console.log("sending");
@@ -99,17 +201,16 @@ const uploadData= () => {
     formdata.append('foto_lic',form.value.foto_licencia); 
     axios.post('/api/upload/'+props.id,formdata)  
     .then((response)=>{
-        console.log(response.data);        
-        if(response.data.error != null){
-            form.value.value_error=true;
-            error_array= response.data.error;
-            console.log(error_array);
-            console.log('error');
-        }
+        console.log(response.status);        
    
     })
     .catch((error)=>{
-        console.log(error.response)
+      //  console.log(error.status);        
+      error_array= error.response.data.error;
+            console.log(error_array);
+        console.log(error.response);
+        console.log(error.response.data.error);
+        showErrors(error_array);
     })
     ;
 }
@@ -180,55 +281,57 @@ const cambiarState = () =>{
         </div>
     <div class="form-row">
     <div class="form-group col-md-6">
-        <div v-if="form.value_error && error_array.name !=  null">
-              <span>{{error_array.name[0]}}</span>
-        </div>
+      
         <label for="">Nombre</label>
-        <input  v-model="form.name"  class="form-control" placeholder="Nombre" @blur="v$.name.$touch" @change="cambiarState()"> 
+        <input  v-model="form.name"  id="id_name" class="form-control" placeholder="Nombre" @click="error_quitar(0)" @change="cambiarState()"> 
+        <div id="msg_name">
+        </div>
     </div>
     <div class="form-group col-md-6">
-        <div v-if="form.value_error && error_array.apellido">
-                <span>{{error_array.apellido[0]}}</span>
-        </div>        
+             
         <label for="">apellido</label>
-        <input class="form-control" placeholder="Apellido" v-model="form.apellido">
-        
+        <input id="id_apellido"  class="form-control" placeholder="Apellido" @click="error_quitar(1)" v-model="form.apellido">
+          <div id="msg_apellido" >
+              
+            
+        </div> 
     </div>
         </div>
     <div class="form-row">
 
         <div class="form-group col-md-6">
-                <div v-if="form.value_error && error_array.cedula !=  null">
-              <span>{{error_array.cedula[0]}}</span>
-            </div>
+              
                 <label for="">Cedula</label>
-                <input  v-model="form.cedula" class="form-control" placeholder="Cedula"> 
+                <input id="id_cedula"   v-model="form.cedula" class="form-control" @click="error_quitar(2)" placeholder="Cedula"> 
+                  <div id="msg_cedula">
+             
+                  </div>
         </div>
         <div  class="form-group col-md-6"> 
-                <div v-if="form.value_error && error_array.no_licencia !=  null">
-              <span>{{error_array.no_licencia[0]}}</span>
-            </div>
+             
                 <label for="">No licencia</label>
-                <input  v-model="form.no_licencia"  class="form-control" placeholder="No Licencia"> 
+                <input id="id_no_licencia"  v-model="form.no_licencia"  class="form-control" @click="error_quitar(3)" placeholder="No Licencia"> 
+                   <div id="msg_no_licencia">
+              
+                  </div>
         </div>
 
       
     </div>
     <div class="form-row">
         <div class="form-group col-md-6" >
-            <div v-if="form.value_error && error_array.fecha_nac !=  null">
-              <span>{{error_array.fecha_nac[0]}}</span>
-            </div>
                 <label for="">Fecha nacimiento</label>
-                <input type="date" class="form-control" v-model="form.fecha_nac">
+                <input id="id_fecha_nac" type="date" class="form-control" @click="error_quitar(4)" v-model="form.fecha_nac">
+                <div id="msg_fecha_nac">
 
+                </div>
         </div>
         <div class="form-group col-md-6" >
-            <div v-if="form.value_error && error_array.fecha_venc !=  null">
-              <span>{{error_array.fecha_venc[0]}}</span>
-            </div>
                 <label for="">Fecha vencimiento</label>
-                <input type="date" class="form-control" v-model="form.fecha_venc">
+                <input id="id_fecha_venc" type="date" class="form-control" @click="error_quitar(5)" v-model="form.fecha_venc">
+                <div id="msg_fecha_venc">
+
+                </div>
         </div>
     </div>
     <div class="form-row">
