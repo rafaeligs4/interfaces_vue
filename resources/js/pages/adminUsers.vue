@@ -25,7 +25,10 @@ const eliminarPerfil = (num) =>{
 </script>
 <template>
     <div class="container">
- <h1>Administrar usuarios</h1>
+    <div class="d-flex justify-content-center m-2">
+        <h1>Administrar usuarios</h1>
+    </div>    
+
  <table class="table table-striped principal ">
         <thead>
             <tr>

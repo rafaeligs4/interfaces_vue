@@ -276,7 +276,7 @@ const cambiarState = () =>{
 
 <template>
     <div class="container" >
-        <div>
+        <div class="d-flex justify-content-center m-2">
             <h1>Editar perfil </h1> 
         </div>
     <div class="form-row">

@@ -195,7 +195,6 @@ const uploadData= () => {
         console.log(response.data)
     })
     .catch((error)=>{
-        console.log(error.response)
         error_array=error.response.data.error;
         showErrors(error_array);
 
@@ -325,7 +324,10 @@ onMounted(()=>{
 
 </script> 
 <template>
-    <h1>Hola</h1>
+    <div class="d-flex justify-content-center m-2">
+        <h1>Editar Datos del Auto</h1>
+    </div>
+    
     <div class="container">        
         <div class="row">
             <div class="col-md-6 ">
@@ -456,7 +458,7 @@ onMounted(()=>{
             Realizar Cambios
             </button>
             </div>
-
+            
            
             </div>
            

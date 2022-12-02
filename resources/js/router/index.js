@@ -26,6 +26,7 @@ const routes=[
                 component: profile,
                 props: true 
             },
+           
             {
             path:'/dashboard',
             component:  dashboard
@@ -65,13 +66,7 @@ const routes=[
             }
     ]
         
-    },  
-    
-,
-
-    {  
-       
-    }
+    },
 ]
 
 const router= createRouter({

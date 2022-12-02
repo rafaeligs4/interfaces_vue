@@ -4,15 +4,20 @@ import { onMounted, ref } from 'vue';
 import { jsPDF } from 'jspdf';  
 import autoTable from 'jspdf-autotable'; 
 let cars = ref([]); 
+let role;
+const usuarioId = JSON.parse(document.head.querySelector('meta[name="user"]').content);
 const all_cars = async () =>{
     let response = await axios.get("/api/get_all_cars").
     then(response=>{
-        cars.value = response.data.carros; 
-    //    tabla();         
-    });
-    
-    
+     cars.value = response.data.carros; 
 
+    });
+}
+const get_User =async () =>{
+    let usuario = await axios.get('/api/edit/'+usuarioId);
+    
+   role=usuario.data.user.rol;
+   console.log(role);
 }
 const eliminarPerfil = (num) =>{
     axios.post('/api/delete_car/'+num) 
@@ -48,9 +53,9 @@ var res = doc.autoTableHtmlToJson(document.getElementById("table_id"));
  doc.save('hola.pdf');
 }
 onMounted(async () => {
-
+    get_User();
     all_cars();
-        
+    
   
 //    valores_tabla();    
 });   
@@ -59,7 +64,7 @@ onMounted(async () => {
 <template>
     <div class="container">
      
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center m-2">
             <h1>Tabla de Autos</h1>
         </div>
         <div class="d-flex justify-content-end m-1">
@@ -74,36 +79,36 @@ onMounted(async () => {
                 <th id="row_head">Id  </th>
                 <th id="row_head">Marca  </th>
                 <th id="row_head">Modelo</th>
-                <th id="row_head">Placa</th>
+                <th id="row_head" >Placa</th>
                 <th id="row_head">Estado</th>
-          <th>Editar Auto</th>
-                <th>Eliminar Auto</th>
-                <th>Cambiar Estado</th> 
-            </tr>
+                <th v-if='role ==="admin"'>Editar Auto</th>
+                <th v-if='role === "admin"'>Eliminar Auto</th>
+                <th v-if='role === "admin"'>Cambiar Estado</th> 
+            </tr> 
         </thead>
-        <tbody>
+        <tbody> 
         <tr v-for="car in cars"> 
             <td id="row_id" class="">{{car.id}} </td>
             <td id="row_marca" class="">{{car.marca}} </td>
             <td id="row_modelo" class=""> {{car.modelo}}</td>
             <td id="row_placa" class=""> {{car.placa}}</td>
             <td id="row_estado" class=""> {{car.estado}}</td> 
-           <td>
+           <td v-if='role == "admin"'>
            
         
-             <router-link :to='"/editcar/"+car.id'>
+             <router-link  :to='"/editcar/"+car.id'>
                 <button class="btn btn-dark">Editar Carro </button></router-link>  
       
            
              
             
             </td>
-            <td>
+            <td v-if='role == "admin"'>
             <div class="">
               <button class="btn btn-danger" @click="eliminarPerfil(car.id)">Eliminar perfil</button> 
             </div> 
             </td>  
-            <td>
+            <td v-if='role == "admin"'> 
                 <select name="" id="" v-model="car.estado"  class="form-control" @change="changeState(car.id,car.estado)">
                    <option value="Activo">Activo</option>
                    <option value="Inactivo">Inactivo</option>

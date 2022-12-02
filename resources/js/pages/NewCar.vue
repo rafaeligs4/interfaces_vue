@@ -304,8 +304,8 @@ onMounted(()=>{
 <template>    
     <div class="container">
          
-        <div class="">
-            <h1>Crear Auto </h1> 
+        <div class="d-flex justify-content-center m-2">
+            <h1>Ingresar Datos del Auto </h1> 
         </div>
         <div class="row ">
         <div class="col-6 ">
@@ -380,7 +380,7 @@ onMounted(()=>{
 <div class="form-row">
     <div class="form-group col-md-12">
     
-                <label for="">estado</label>
+                <label for="">Estado</label>
                 <select name="" id="id_estado" class="form-control" @click="error_quitar(4)" v-model="form.estado">
                    <option disabled value="">Seleccione un elemento</option>
                    <option value="Activo">Activo</option>
@@ -396,7 +396,7 @@ onMounted(()=>{
 <div class="form-row">
     <div class="form-group col-md-6">
                 
-                <label for="">tipo</label>
+                <label for="">Tipo</label>
             <select id="id_tipo" class="form-control" @click="error_quitar(5)" v-model="form.tipo">
                    <option v-for="tipo in form.select_values" 
 

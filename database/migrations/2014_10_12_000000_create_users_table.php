@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('no_licencia')->nullable();
             $table->string('foto_perfil')->nullable();
             $table->string('foto_licencia')->nullable();
+            $table->string('rol')->default('vendedor');
             $table->boolean('estado')->default(true);
             $table->date('fecha_nac')->nullable();
             $table->date('fecha_venc')->nullable();

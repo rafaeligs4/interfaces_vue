@@ -1,9 +1,11 @@
 <script setup>
+import axios from 'axios';
 import { onMounted, ref } from 'vue';
 
 
 const typeCars= ref([]); 
 
+let role;
 const getTypes= async () =>{
     
    let value = axios.get('/api/get_all_types_cars')
@@ -11,6 +13,7 @@ const getTypes= async () =>{
     typeCars.value=response.data.tipos; 
         console.log(typeCars.value); 
    }); 
+ 
 }
 const eliminarPerfil = (num) =>{
     axios.post('/api/type/delete/'+num) 
@@ -79,7 +82,7 @@ onMounted(()=>{
             </td>  
             <td>
                 <select name="" id="" class="form-control" v-model="car.estado" @change="changeState(car.id,car.estado)">
-                   <option value=true>Activo</option>
+                    <option value=true>Activo</option>
                    <option value=false>Inactivo</option>
                 </select> 
             </td>

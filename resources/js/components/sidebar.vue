@@ -20,7 +20,7 @@
 
 
 <nav class="mt-2">
-<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+<ul class="nav nav-pills nav-sidebar flex-column" id="elim" data-widget="treeview" role="menu" data-accordion="false">
 
 <li class="nav-item">
 <router-link :to='"/edit/"+usuarioId' class="nav-link">
@@ -29,7 +29,7 @@
 </router-link>
 </li>
 
-<li class="nav-item">
+<li class="nav-item" id="eliminar1">
 <router-link to="/adminuser" class="nav-link">
 <i class="nav-icon fas fa-th"></i>
 <p>
@@ -59,7 +59,7 @@ Administrar Autos
 </router-link>
 
 </li>
-<li class="nav-item">
+<li class="nav-item" id="eliminar2">
 <router-link to="/admintypecar" class="nav-link">
 <i class="nav-icon fas fa-th"></i>
 <p>
@@ -108,15 +108,29 @@ Administrar tipos de vehiculos
  
 </template>
 <script setup>
+import axios from 'axios';
+import { onMounted } from 'vue';
 import {useRouter} from 'vue-router';
 const router=useRouter()
 
 const usuarioId = JSON.parse(document.head.querySelector('meta[name="user"]').content);
-const path="edit/"+usuarioId
-const id_count = () =>{
-    console.log(usuarioId);
-}
-
+const path="edit/"+usuarioId;
+const filterOptions = async ()=>{
+    let response =  await axios.get('/api/edit/'+usuarioId);
+    let role = response.data.user.rol;
+    //console.log(role);
+    if(role=="vendedor"){
+        console.log(role);
+        let padre= document.getElementById("elim");
+        let hijo1= document.getElementById("eliminar1");
+        let hijo2=  document.getElementById("eliminar2");
+        padre.removeChild(hijo1);
+        padre.removeChild(hijo2);
+    }
+}   
+onMounted(()=>{
+    filterOptions();
+})
 </script>
 
 
