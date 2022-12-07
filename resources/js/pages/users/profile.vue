@@ -3,7 +3,8 @@ import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import useValidate from '@vuelidate/core';
 import {required,email,minLength,numeric,maxLength} from '@vuelidate/validators';
-
+import {useRouter} from 'vue-router';
+const router=useRouter()
 
 
 let error_array=[];
@@ -202,7 +203,7 @@ const uploadData= () => {
     axios.post('/api/upload/'+props.id,formdata)  
     .then((response)=>{
         console.log(response.status);        
-   
+        router.push('/home');
     })
     .catch((error)=>{
       //  console.log(error.status);        

@@ -2,6 +2,9 @@
 //importando clases
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
+import {useRouter} from 'vue-router';
+const router=useRouter()
+
 let valor = 0;
 let arr=[];  
 let pos1=0;
@@ -193,6 +196,7 @@ const uploadData= () => {
    axios.post('/api/edit_car/'+props.id,formdata)  
     .then((response)=>{
         console.log(response.data)
+        router.push('/home');
     })
     .catch((error)=>{
         error_array=error.response.data.error;

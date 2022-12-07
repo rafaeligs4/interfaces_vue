@@ -36,6 +36,8 @@ import useValidate from '@vuelidate/core';
 import {required,email,minLength} from '@vuelidate/validators';
 import axios from 'axios';
 import { ref } from 'vue';
+import {useRouter} from 'vue-router';
+const router=useRouter();
 const form = ref({
     nombre_tipo_vehiculo: '',
     estado: false
@@ -52,6 +54,7 @@ const formdata=new FormData();
         let response= axios.post('/api/type/create',formdata)
         .then((response)=>{
         console.log(response.data); 
+        router.push('/home');
    }); 
     }
 };  

@@ -1,6 +1,9 @@
 <script setup> 
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
+import {useRouter} from 'vue-router';
+const router=useRouter()
+
 const form = ref({
  
 });
@@ -55,6 +58,7 @@ const formdata=new FormData();
    let response= axios.post('/api/type/update/'+props.id,formdata)
    .then((response)=>{
     console.log(response.data); 
+    router.push('/home');
    })
    .catch(error=>{
     console.log(error.response);

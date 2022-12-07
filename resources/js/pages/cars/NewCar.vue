@@ -7,6 +7,8 @@ import axios from 'axios';
 import useValidate from '@vuelidate/core';
 import {required,email,minLength} from '@vuelidate/validators';
 import { onMounted, ref } from 'vue';
+import {useRouter} from 'vue-router';
+const router=useRouter()
 
 
 const sub = () =>{
@@ -94,6 +96,7 @@ const uploadData= () => {
    axios.post('/api/create_car',formdata)  
     .then((response)=>{
         console.log(response.data)
+        router.push('/home');
     })
     .catch((error)=>{
         console.log(error.response)

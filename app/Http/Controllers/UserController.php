@@ -25,8 +25,8 @@ class UserController extends Controller
       [
         'name'=>['required','min:4','max:30'],
         'apellido'=>['required','min:4','max:30'], 
-        'cedula'=>['required','unique:users,cedula,'.$user->cedula,'min:4','max:10'],
-         'no_licencia'=>['required','unique:users,no_licencia,'.$user->no_licencia,'min:4','max:10'],
+        'cedula'=>['required','unique:users,cedula,'.$user->id,'min:4','max:10'],
+         'no_licencia'=>['required','unique:users,no_licencia,'.$user->id,'min:4','max:10'],
          'fecha_nac'=>['required','before_or_equal:'.$date_today->subYears(18)->format('y-m-d')],
          'fecha_venc'=>['required','after_or_equal:'.$date->format('y-m-d')]
       ]   
