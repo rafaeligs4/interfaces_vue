@@ -3,15 +3,14 @@ import {createRouter, createWebHistory} from 'vue-router'
 import index from '../components/index.vue'; 
 import dashboard from '../pages/dashboard.vue';
 import sidebar from '../components/sidebar.vue';   
-import headup from  '../components/headLink.vue';
-import profile from '../pages/profile.vue';
-import adminUser from '../pages/adminUsers.vue';
-import newCar from '../pages/NewCar.vue';
-import editType from '../pages/EditType.vue';
-import adminCars from '../pages/adminCars.vue';
-import adminTypeCars from '../pages/adminTypeCar.vue';
-import editCarType from '../pages/editCarType.vue'; 
-import editCar from '../pages/EditCar.vue';
+import profile from '../pages/users/profile.vue';
+import adminUser from '../pages/users/adminUsers.vue';
+import newCar from '../pages/cars/NewCar.vue';
+import editType from '../pages/type_cars/EditType.vue';
+import adminCars from '../pages/cars/adminCars.vue';
+import adminTypeCars from '../pages/type_cars/adminTypeCar.vue';
+import editCarType from '../pages/type_cars/editCarType.vue'; 
+import editCar from '../pages/cars/EditCar.vue';
 //import {ExampleComponent} from '../components/ExampleComponent.vue';
 const routes=[
 
