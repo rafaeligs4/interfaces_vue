@@ -4,8 +4,18 @@ import { onMounted, ref } from 'vue';
 
 
 const typeCars= ref([]); 
+const form = ref({
+    estado_act:false
+});
 
-let role;
+let crrt_id ="";
+const getType= (id)=>{
+    let value =axios.get('/api/get_type/'+id)
+    .then(response=>{
+        form.value=response.data.tipo;
+        console.log(form.value);  
+    });
+};
 const getTypes= async () =>{
     
    let value = axios.get('/api/get_all_types_cars')
@@ -35,6 +45,32 @@ const changeState = (id,estado) =>{
         getTypes();
     }); 
 };
+const value_State=()=>{
+    estado_act= !estado_act;
+   
+} 
+// const add_attrib = ()=>{
+//     const att= document.getElementById("bttn-tog");
+//     if(form.value.estado_act){
+//         att.setAttribute("data-bs-toggle","modal");
+//         att.setAttribute("data-bs-target","#exampleModal");
+           
+//     }else{
+//         att.removeAttribute("data-bs-toggle");
+//         att.removeAttribute("data-bs-target");
+//     }
+   
+   
+// }
+
+const getId=(id)=>{
+    console.log(form.value.estado_act);
+    form.value.estado_act = !form.value.estado_act;
+  //  add_attrib();
+    crrt_id=id;
+   
+
+}
 onMounted(()=>{
      
  getTypes();
@@ -68,11 +104,12 @@ onMounted(()=>{
            
            <td>
           
-               <router-link :to='"/editcartype/"+car.id'>
-                <button class="btn btn-dark">
-                    Editar Carro 
+              
+              
+                <button id="bttn-tog" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal" @click="getId(car.id)">
+                    Editar Tipo de Carro
                 </button>
-                </router-link>  
+                
                
             </td>
             <td>
@@ -89,5 +126,11 @@ onMounted(()=>{
         </tr> 
  
         </tbody>
-    </table>
+       
+        <edittc :id="crrt_id" :modal_stt="crrt_state"
+                ></edittc>
+        </table>
+   
+    
+      
 </template>

@@ -30,10 +30,14 @@ import { createApp } from 'vue';
 import headup from './components/headLink.vue';
 import sidebar from './components/sidebar.vue';
 import footer from './components/footer.vue';
+import editType from './pages/type_cars/EditType.vue';
+import editCarType from './pages/type_cars/EditCarType.vue';
 import App from './components/App.vue';
 const app=createApp(App);
 app.component('headup', headup)
-.component('foot',footer);
+.component('foot',footer)
+.component('typecar',editType)
+.component('edittc',editCarType);
 ;
 //app.component('app', App); 
 

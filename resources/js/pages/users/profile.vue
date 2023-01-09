@@ -375,7 +375,7 @@ const cambiarState = () =>{
         </div>
        
     </div> 
-       
+     
     
 </template>
  

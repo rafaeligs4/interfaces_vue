@@ -27,7 +27,12 @@ const sub4 = () =>{
 
 // });
 
+// const myModal = document.getElementById('myModal')
+// const myInput = document.getElementById('myInput')
 
+// myModal.addEventListener('shown.bs.modal', () => {
+//   myInput.focus()
+// })
 let valor = 0;
 let submitted = false, 
 submitted2=false; 
@@ -96,7 +101,7 @@ const uploadData= () => {
    axios.post('/api/create_car',formdata)  
     .then((response)=>{
         console.log(response.data)
-        router.push('/home');
+  //      router.push('/home');
     })
     .catch((error)=>{
         console.log(error.response)
@@ -415,18 +420,19 @@ onMounted(()=>{
                  
     </div>
     <div class="form-group col-md-6 d-flex align-items-end "> 
-        <router-link to="/type"> 
-                    <button class="btn btn-primary ">Agregar Tipo</button>
+        
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Agregar Tipo</button>
               
-                </router-link>
+              
                 
                
     </div>
 </div>           
-            
-          
-          
-          
+<!-- Modal --> 
+<typecar></typecar>
+         
+           
           
          
             <form action="">

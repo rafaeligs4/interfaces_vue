@@ -1,18 +1,22 @@
 <template>
- <h1>Tipo de vehiculo</h1>
-<div class="row">
-    <div class="d-flex justify-content-center">
-    <div class="form-row col-md-4">
-    <label for="">Nombre del Tipo de Vehiculo</label>
-    <input id="id_nv" class="form-control m-1" type="text" @click="error_quitar()"  v-model="form.nombre_tipo_vehiculo">
-    <div id="msg_nv">
 
-    </div>
-    </div>
-   </div> 
-    
-
- <div class="d-flex justify-content-center m-1" >
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+      
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Tipo de vehiculo</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex justify-content-center">
+            <div class="form-row col-md-12">
+                <label for="">Nombre del Tipo de Vehiculo</label>
+                <input id="id_nv" class="form-control m-1" type="text" @click="error_quitar()"  v-model="form.nombre_tipo_vehiculo">
+    <div id="msg_nv"></div>
+            </div>
+        </div> 
+        <div class="d-flex justify-content-center m-1" >
     <div class="form-check form-check-inline">
         <input type="radio" name="Activo" class="form-check-input" value=true id="act" v-model="form.estado">
         <label for="" class="form-check-label">Activo</label>
@@ -21,17 +25,23 @@
         <input type="radio" name="Inactivo" class="form-check-input" value=false  id="inact"  v-model="form.estado">
         <label for="" class="form-check-label">Inactivo</label>
     </div>
- </div>
- <div class="d-flex justify-content-center">
-
+    </div>
+    
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
         <button class="btn btn-primary" @click="uploadType()"> 
             Subir
         </button>
- </div>
- </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 </template>
 <script setup>
+
 import useValidate from '@vuelidate/core';
 import {required,email,minLength} from '@vuelidate/validators';
 import axios from 'axios';
@@ -42,7 +52,10 @@ const form = ref({
     nombre_tipo_vehiculo: '',
     estado: false
 });
-
+const props = defineProps({
+    entrada: Boolean
+});
+console.log(props.entrada);
 
 
 const uploadType = () =>{

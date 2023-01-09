@@ -6,6 +6,7 @@ use App\Models\car;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class CarController extends Controller
@@ -197,6 +198,10 @@ class CarController extends Controller
       $car->foto4 = $request->foto4;
       $car->save(); 
       return response()->json(['message'=>'hola']); 
+    }
+    public function concatAllCars(Request $request){
+      $car =car::select(DB::raw("CONCAT(marca,' ',modelo,' ',color,' ',placa,' ','tipo ') AS car"))->get();
+          return response()->json(['car'=> $car],200); 
     }
 } 
 

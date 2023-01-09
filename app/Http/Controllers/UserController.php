@@ -6,6 +6,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -87,5 +88,8 @@ class UserController extends Controller
       }
       $user->delete();  
    }   
-      
-} 
+   public function concatAllClients(){
+    $user =User::select(DB::raw("CONCAT(name,' ',apellido,' ',cedula,' ',no_licencia) as user"))->get();
+          return response()->json(['user'=> $user],200); 
+    }
+ } 

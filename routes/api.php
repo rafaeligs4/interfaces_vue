@@ -45,3 +45,6 @@ Route::post('/type/update/{id}',[type_carController::class,'upload_type']);
 Route::post('/type/delete/{id}',[type_carController::class,'delete']); 
 Route::post('/type/create',[type_carController::class,'create']); 
 Route::post('/type/state/{id}',[type_carController::class,'status']);  
+//Rent
+Route::get('/get_concat_cars',[CarController::class,'concatAllCars']); 
+Route::get('/get_concat_clients',[UserController::class,'concatAllClients']); 

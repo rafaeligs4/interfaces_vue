@@ -11,6 +11,7 @@ import adminCars from '../pages/cars/adminCars.vue';
 import adminTypeCars from '../pages/type_cars/adminTypeCar.vue';
 import editCarType from '../pages/type_cars/editCarType.vue'; 
 import editCar from '../pages/cars/EditCar.vue';
+import newRent from '../pages/rent/newRent.vue';
 //import {ExampleComponent} from '../components/ExampleComponent.vue';
 const routes=[
 
@@ -62,6 +63,10 @@ const routes=[
                 path: '/editcartype/:id',
                 component: editCarType,
                 props: true 
+            },
+            {
+                path: '/new-rent',
+                component: newRent 
             }
     ]
         

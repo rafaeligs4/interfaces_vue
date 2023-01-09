@@ -69,6 +69,16 @@ Administrar tipos de vehiculos
 </router-link> 
 
 </li>
+<li class="nav-item" id="eliminar2">
+<router-link to='/new-rent' class="nav-link">
+<i class="nav-icon fas fa-th"></i>
+<p>
+Alquiler de un auto
+</p>
+</router-link> 
+
+</li>
+
 </ul>
 </nav>
 
