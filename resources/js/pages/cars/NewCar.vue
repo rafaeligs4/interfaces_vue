@@ -166,11 +166,12 @@ const validateData = ()=>{
 
  
   v$.value.$validate();
- if(v$.value.$error){
+  console.log(v$.value.$errors);
+ if(v$.value.nombre_tipo_vehiculo){
    if(v$.value.marca.$error){
         let error_marca = "";
         if(v$.value.marca.required.$invalid){
-            console.log("sdas");
+          
            error_marca="El campo Marca es requerido";
            
         }else if(v$.value.marca.minLength.$invalid){
@@ -186,7 +187,7 @@ const validateData = ()=>{
    if(v$.value.modelo.$error){
         let error_modelo = "";
         if(v$.value.modelo.required.$invalid){
-            console.log("sdas");
+       
            error_modelo="El campo Modelo es requerido";
            
         }else if(v$.value.modelo.minLength.$invalid){
@@ -202,7 +203,7 @@ const validateData = ()=>{
    if(v$.value.placa.$error){
         let error_placa= "";
         if(v$.value.placa.required.$invalid){
-            console.log("sdas");
+          
            error_placa="El campo Placa es requerido";
            
         }else if(v$.value.placa.minLnegth.$invalid){
@@ -218,7 +219,7 @@ const validateData = ()=>{
    if(v$.value.color.$error){
         let error_color= "";
         if(v$.value.color.required.$invalid){
-            console.log("sdas");
+          
            error_color="El campo Color es requerido";
            
         }else if(v$.value.color.minLength.$invalid){
@@ -234,7 +235,7 @@ const validateData = ()=>{
    if(v$.value.estado.$error){
         let error_placa= "";
         if(v$.value.estado.required.$invalid){
-            console.log("sdas"); 
+       
            error_placa="El campo del Estado es requerido";
            
         }
@@ -247,7 +248,7 @@ const validateData = ()=>{
    if(v$.value.tipo.$error){
         let error_placa= "";
         if(v$.value.tipo.required.$invalid){
-            console.log("sdas"); 
+          
            error_placa="El campo del Tipo es requerido";
            
         }

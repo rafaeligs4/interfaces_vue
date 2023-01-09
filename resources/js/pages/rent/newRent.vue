@@ -3,6 +3,11 @@ import axios from 'axios';
 import { ref,onMounted } from 'vue';
 
 const form = ref({
+    car: "",
+    client: "",
+    precio: "",
+    fecha_ini: "",
+    fecha_fin: "",
     cars:[],
     clients:[] 
 });
@@ -26,7 +31,10 @@ const getClients= ()=>{
     });
     console.log(form.value);
 };
+const createRent = ()=>{
+    const formdata=new FormData();
 
+}
 onMounted(()=>{
     getCars();
     getClients();
@@ -50,7 +58,7 @@ $(document).ready(function() {
                     <div class="form-group col-md-12">
         
                             <label for="">Vehiculo</label>
-                            <input list="listCars" class="form-control" name=""  placeholder="Selecciona un auto">
+                            <input list="listCars" class="form-control" name=""  placeholder="Selecciona un auto" v-model="form.car">
                                 <datalist  id="listCars">
                                     <!-- <option disabled value="">Seleccione un elemento</option> -->
                                     <option v-for="car in form.cars" :value="car.car"></option> 
@@ -65,7 +73,7 @@ $(document).ready(function() {
                     <div class="form-group col-md-12">
         
                             <label for="">Clientes</label>
-                            <input list="listClients" class="form-control" name=""  placeholder="Selecciona un cliente">
+                            <input list="listClients" class="form-control" name=""  placeholder="Selecciona un cliente" v-model="form.client">
                                 <datalist  id="listClients">
                                     <!-- <option disabled value="">Seleccione un elemento</option> -->
                                     <option v-for="client in form.clients" :value="client.user"></option> 
@@ -80,7 +88,7 @@ $(document).ready(function() {
                     <div class="form-group col-md-12">
         
                             <label for="">Precio</label>
-                            <input  class="form-control" name=""  placeholder="Precio">
+                            <input  class="form-control" name=""  placeholder="Precio" v-model="form.precio">
                                
                     
                     <div id="msg_estado">   
@@ -88,7 +96,24 @@ $(document).ready(function() {
                     </div>
                         </div>
                     </div> 
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="">Desde</label>
+                <input id="id_fecha_nac" type="date" class="form-control" v-model="form.fecha_ini">
+                <div class="form-group col-md-4">
+                    <p>Total de </p>            
+                </div>      
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="">Hasta</label>
+                            <input id="id_fecha_nac" type="date" class="form-control" v-model="form.fecha_fin">
+                               
+                        </div>
+                    </div>
                 </div> 
+                <div class="col-12  justify-content-center">
+                    <button type="submit" v-on:click="uploadData()" class="col-auto btn btn-primary">Subir</button>
+                </div>
             </div>
         </div>
     </div>
