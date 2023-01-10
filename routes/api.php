@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\RentController;
 use App\Http\Controllers\type_carController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -46,5 +47,8 @@ Route::post('/type/delete/{id}',[type_carController::class,'delete']);
 Route::post('/type/create',[type_carController::class,'create']); 
 Route::post('/type/state/{id}',[type_carController::class,'status']);  
 //Rent
+
 Route::get('/get_concat_cars',[CarController::class,'concatAllCars']); 
 Route::get('/get_concat_clients',[UserController::class,'concatAllClients']); 
+
+Route::post('/create_rent',[RentController::class,'create_rent']);

@@ -89,7 +89,7 @@ class UserController extends Controller
       $user->delete();  
    }   
    public function concatAllClients(){
-    $user =User::select(DB::raw("CONCAT(name,' ',apellido,' ',cedula,' ',no_licencia) as user"))->get();
+    $user =User::select(DB::raw("CONCAT(name,' ',apellido,' ',cedula,' ',no_licencia) as user"),'id')->get();
           return response()->json(['user'=> $user],200); 
     }
  } 

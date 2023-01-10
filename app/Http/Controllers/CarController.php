@@ -200,8 +200,9 @@ class CarController extends Controller
       return response()->json(['message'=>'hola']); 
     }
     public function concatAllCars(Request $request){
-      $car =car::select(DB::raw("CONCAT(marca,' ',modelo,' ',color,' ',placa,' ','tipo ') AS car"))->get();
+      $car =car::select(DB::raw("CONCAT(marca,' ',modelo,' ',color,' ',placa,' ','tipo ') AS car"),'id')->get();
           return response()->json(['car'=> $car],200); 
     }
+
 } 
 

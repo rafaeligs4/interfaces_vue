@@ -21,4 +21,5 @@ class car extends Model
         'foto3',
         'foto4'
     ];
+    
 }
