@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rent;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class RentController extends Controller
@@ -19,5 +20,13 @@ class RentController extends Controller
         ]);
         return response()->json(['message'=> $request->all()]);  
     }
+    public function getAllc(){
+        $rents = Rent::all();
+        return response()->json(['rents'=> $rents]);  
+    }
+    public function dataInvoice($id){
+        $usr=User::find($id);
+        return response()->json(['user'=> $usr]);  
+    } 
 }
- 
+  

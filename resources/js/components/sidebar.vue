@@ -79,6 +79,15 @@ Alquiler de un auto
 
 </li>
 
+<li class="nav-item" id="eliminar2">
+<router-link to='/adminrent' class="nav-link">
+<i class="nav-icon fas fa-th"></i>
+<p>
+Administrar Alquileres
+</p>
+</router-link> 
+
+</li>
 </ul>
 </nav>
 

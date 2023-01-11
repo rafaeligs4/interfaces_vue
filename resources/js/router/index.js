@@ -12,6 +12,8 @@ import adminTypeCars from '../pages/type_cars/adminTypeCar.vue';
 import editCarType from '../pages/type_cars/editCarType.vue'; 
 import editCar from '../pages/cars/EditCar.vue';
 import newRent from '../pages/rent/newRent.vue';
+import adminRent from '../pages/rent/adminRent.vue';
+import invoiceRent from '../pages/rent/invoiceRent.vue';
 //import {ExampleComponent} from '../components/ExampleComponent.vue';
 const routes=[
 
@@ -67,10 +69,20 @@ const routes=[
             {
                 path: '/new-rent',
                 component: newRent 
-            }
+            },
+            {
+                path: '/adminrent',
+                component: adminRent 
+            },
+            {
+                path: '/invoice-rent/:id',
+                component: invoiceRent,
+                props: true  
+           } 
     ]
         
     },
+    
 ]
 
 const router= createRouter({

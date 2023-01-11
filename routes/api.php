@@ -51,4 +51,7 @@ Route::post('/type/state/{id}',[type_carController::class,'status']);
 Route::get('/get_concat_cars',[CarController::class,'concatAllCars']); 
 Route::get('/get_concat_clients',[UserController::class,'concatAllClients']); 
 
-Route::post('/create_rent',[RentController::class,'create_rent']);
+Route::get('/get_data_invoice/',[RentController::class,'dataInvoice']);  
+Route::get('/get_all_rents',[RentController::class,'getAllc']);  
+
+Route::post('/create_rent/{id}',[RentController::class,'create_rent']);  

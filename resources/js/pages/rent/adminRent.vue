@@ -1,5 +1,18 @@
 <script setup>
-
+import axios from 'axios';
+import { onMounted, ref } from 'vue';
+const form = ref([   
+]);
+const getRents= async ()=>{
+let value = axios.get('/api/get_all_rents').then(response=>{
+        console.log(response);
+        form.value=response.data.rents;
+        console.log(form.value); 
+    }); 
+} 
+onMounted(()=>{
+    getRents();
+}); 
 </script>
 <template>
     <div class="container">
@@ -11,39 +24,39 @@
             <thead> 
             <tr>
                 <th id="row_head">Id  </th>
-                <th id="row_head">Marca  </th>
-                <th id="row_head">Modelo</th>
-                <th id="row_head" >Placa</th>
+                <th id="row_head">Cliente</th>
+                <th id="row_head">Auto</th>
+                <th id="row_head" >Acciones</th>
                 <th id="row_head">Estado</th>
-                <th v-if='role ==="admin"'>Editar Auto</th>
-                <th v-if='role === "admin"'>Eliminar Auto</th>
-                <th v-if='role === "admin"'>Cambiar Estado</th> 
+                <th>Imprimir Factura</th>
+                <th>Editar</th> 
+                
             </tr> 
         </thead>
         <tbody> 
-        <tr v-for="car in cars"> 
-            <td id="row_id" class="">{{car.id}} </td>
-            <td id="row_marca" class="">{{car.marca}} </td>
-            <td id="row_modelo" class=""> {{car.modelo}}</td>
-            <td id="row_placa" class=""> {{car.placa}}</td>
-            <td id="row_estado" class=""> {{car.estado}}</td> 
-           <td v-if='role == "admin"'>
-           
-        
-             <router-link  :to='"/editcar/"+car.id'>
-                <button class="btn btn-dark">Editar Carro </button></router-link>  
-      
-           
-             
-            
+        <tr v-for="rent in form"> 
+            <td id="row_id" class="">{{rent.id}} </td>
+            <td id="row_marca" class="">{{rent.user_complete}} </td>
+            <td id="row_modelo" class=""> {{rent.car_complete}}</td>
+            <td id="row_placa" class=""> {{rent.price}}</td>
+            <!-- <td id="row_estado" class=""> {{car.estado}}</td>  -->
+           <td>
+             <div class="">
+            <router-link  to='"/editcar/"+rent.id'>
+                <button class="btn btn-dark">Imprimir Factura</button>
+            </router-link>  
+             </div>     
+                                             
             </td>
-            <td v-if='role == "admin"'>
+            <td >
             <div class="">
-              <button class="btn btn-danger" @click="eliminarPerfil(car.id)">Eliminar perfil</button> 
+                <router-link  :to='"/invoice-rent/"+rent.user_id'> 
+              <button class="btn btn-danger">Eliminar perfil</button> 
+              </router-link>     
             </div> 
             </td>  
-            <td v-if='role == "admin"'> 
-                <select name="" id="" v-model="car.estado"  class="form-control" @change="changeState(car.id,car.estado)">
+            <td > 
+                <select name="" id=""   class="form-control" @change="changeState(car.id,car.estado)">
                    <option value="Activo">Activo</option>
                    <option value="Inactivo">Inactivo</option>
                    <option value="Alquilado">Alquilado</option>  
