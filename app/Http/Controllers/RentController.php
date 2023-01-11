@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Rent;
 use App\Models\User;
+use App\Models\car;
 use Illuminate\Http\Request;
 
 class RentController extends Controller
@@ -26,7 +27,16 @@ class RentController extends Controller
     }
     public function dataInvoice($id){
         $usr=User::find($id);
-        return response()->json(['user'=> $usr]);  
+        $rents=$usr->rents()->get();
+        $cars = [];
+        foreach($rents as $rent){
+           
+           $cars[]=$rent->cars()->get();
+        }
+        return response()->json(['user'=> $usr,
+                                'cars'=>$cars,
+                                'rents'=>$rents
+    ]);  
     } 
 }
   

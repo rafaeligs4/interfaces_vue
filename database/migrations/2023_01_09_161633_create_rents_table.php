@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('car_complete');
             $table->string('user_complete');
-            $table->foreignId('user_id');
-            $table->foreignId('car_id');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('car_id')->constrained()->onDelete('cascade');
             $table->string('price');
             $table->date('fecha_inic')->nullable();
             $table->date('fecha_final')->nullable();

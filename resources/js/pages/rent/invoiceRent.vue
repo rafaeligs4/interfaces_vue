@@ -19,7 +19,7 @@ const get_data=()=>{
         console.log(error);
     });
 };
-
+const today= new Date();
 onMounted(()=>{
     console.log(props.id);
     get_data();
@@ -60,7 +60,7 @@ onMounted(()=>{
     </div>
     
      
-<small class="float-right">Date: 2/10/2014</small>
+<small class="float-right">Date: {{ today.getDate }}</small>
 
 </div>
 
@@ -68,23 +68,20 @@ onMounted(()=>{
 
 <div class="row invoice-info">
 <div class="col-sm-4 invoice-col">
-To
+<!-- Datos del Cliente:
 <address>
-<strong>John Doe</strong><br>
-795 Folsom Ave, Suite 600<br>
-San Francisco, CA 94107<br>
-Phone: (555) 539-1037<br>
+<strong >{{ form.user.name +" "+ form.user.apellido}}</strong><br>
+Cédula de Identidad: {{ form.user.cedula}}    <br>
+Numero de Licencia:  {{  form.user.no_licencia}}<br>
 Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="97fdf8fff9b9f3f8f2d7f2eff6fae7fbf2b9f4f8fa">[email&#160;protected]</a>
-</address>
+</address> -->
 </div>
 
 <div class="col-sm-4 invoice-col">
-<b>Invoice #007612</b><br>
+<b>Factura Numero: 00001</b><br>
 <br>
-<b>Order ID:</b> 4F3S8J<br>
-<b>Payment Due:</b> 2/22/2014<br>
-<b>Account:</b> 968-34567
-</div>
+
+</div> 
 
 </div>
 
@@ -94,41 +91,20 @@ Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="
 <table class="table table-striped">
 <thead>
 <tr>
-<th>Qty</th>
-<th>Product</th>
-<th>Serial #</th>
-<th>Description</th>
-<th>Subtotal</th>
+<th>id</th>
+<th>Vehiculo</th>
+<th>Modelo</th>
+<th>Placa</th>
+<th>Precio por Dia</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>1</td>
+<tr v-for="i in form.cars">
+<td >{{i.marca}}</td>
 <td>Call of Duty</td>
 <td>455-981-221</td>
 <td>El snort testosterone trophy driving gloves handsome</td>
 <td>$64.50</td>
-</tr>
-<tr>
-<td>1</td>
-<td>Need for Speed IV</td>
-<td>247-925-726</td>
-<td>Wes Anderson umami biodiesel</td>
-<td>$50.00</td>
-</tr>
-<tr>
-<td>1</td>
-<td>Monsters DVD</td>
-<td>735-845-642</td>
-<td>Terry Richardson helvetica tousled street art master</td>
-<td>$10.70</td>
-</tr>
-<tr>
-<td>1</td>
-<td>Grown Ups Blue Ray</td>
-<td>422-568-642</td>
-<td>Tousled lomo letterpress</td>
-<td>$25.99</td>
 </tr>
 </tbody>
 </table>

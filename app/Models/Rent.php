@@ -19,6 +19,6 @@ class Rent extends Model
     ];
 
 public function cars(){
-    return $this->hasOne(car::class);
+    return $this->belongsTo(car::class,'car_id');
 }
 }
