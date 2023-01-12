@@ -2,27 +2,72 @@
 import axios from 'axios';
 import { ref,onMounted } from 'vue';
 
+let total=0.0;
+let suma=0.0;
+let ivaT=0.0;
+let date=""; 
 const form = ref({});
+const i= ref({
+    v:0
+});
 const props = defineProps({
     id:{
         type: String,
         default: ''
     }  
 });
+const getDate=()=>{
+    const date = Date.now();
     
-const get_data=()=>{
+    let day = date.getDate()
+    let month = date.getMonth() + 1
+    let year = date.getFullYear()
+
+if(month < 10){
+  return `${day}-0${month}-${year}`;
+}else{
+  return `${day}-${month}-${year}` ;
+}
+};
+const calcIva=()=>{
+    let a=0;
+    let prices=0;
+    for (const element  in form.value.cars) {
+        //console.log(form.value.rents.price);
+        prices+= parseFloat(form.value.rents[element].price);
+
+            
+      }    
+     
+
+    console.log(prices);  
+    return prices;
+} 
+const iva = ()=>{
+    return 0.15*total;
+}   ;
+const sumTotal =()=>{
+        return ivaT+total;
+}
+const get_data=async ()=>{
     axios.get('/api/get_data_invoice/'+props.id)
     .then(response=>{
         console.log(response.data);
         form.value=response.data; 
+        i.value.v=form.value.cars.length;
+      total=calcIva();
+      ivaT=iva();
+      suma=sumTotal();
+      date=getDate();
     }).catch(error =>{
         console.log(error);
     });
 };
-const today= new Date();
+
 onMounted(()=>{
-    console.log(props.id);
+   
     get_data();
+    
 }) ;
 </script>
 
@@ -60,7 +105,7 @@ onMounted(()=>{
     </div>
     
      
-<small class="float-right">Date: {{ today.getDate }}</small>
+
 
 </div>
 
@@ -96,15 +141,18 @@ Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="
 <th>Modelo</th>
 <th>Placa</th>
 <th>Precio por Dia</th>
+<th>Total</th>
 </tr>
 </thead>
 <tbody>
-<tr v-for="i in form.cars">
-<td >{{i.marca}}</td>
-<td>Call of Duty</td>
-<td>455-981-221</td>
-<td>El snort testosterone trophy driving gloves handsome</td>
-<td>$64.50</td>
+<tr v-for="value in i.v">
+    <td >{{form.rents[value-1].id}}</td>
+    <td >{{form.cars[value-1][0].marca}}</td>
+    <td >{{form.cars[value-1][0].modelo}}</td>
+    <td >{{form.cars[value-1][0].placa}}</td> 
+    <td>Precio Unit.</td>
+    <td >{{form.rents[value-1].price}}</td>
+
 </tr>
 </tbody>
 </table>
@@ -124,25 +172,24 @@ dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
 </div>
 
 <div class="col-6">
-<p class="lead">Amount Due 2/22/2014</p>
+<p class="lead">{{date}}</p>
 <div class="table-responsive">
 <table class="table">
 <tr>
 <th style="width:50%">Subtotal:</th>
-<td>$250.30</td>
+<td>{{total}}</td>
 </tr>
 <tr>
-<th>Tax (9.3%)</th>
-<td>$10.34</td>
+<th>IVA (15%)</th>
+<td>{{ivaT}}</td>
 </tr>
 <tr>
-<th>Shipping:</th>
-<td>$5.80</td>
+
 </tr>
 <tr>
 <th>Total:</th>
-<td>$265.24</td>
-</tr>
+<td>{{suma}}</td>
+</tr>  
 </table>
 </div>
 </div>
@@ -150,17 +197,7 @@ dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
 </div>
 
 
-<div class="row no-print">
-<div class="col-12">
-<a href="invoice-print.html" rel="noopener" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
-<button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
-Payment
-</button>
-<button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
-<i class="fas fa-download"></i> Generate PDF
-</button>
-</div>
-</div>
+
 </div>
 
 </div>

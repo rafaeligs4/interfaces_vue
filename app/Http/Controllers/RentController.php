@@ -38,5 +38,10 @@ class RentController extends Controller
                                 'rents'=>$rents
     ]);  
     } 
+    public function getRent($id){
+        $rent=Rent::find($id);
+        return response()->json(['rent'=> $rent]);  
+    
+    }
 }
   

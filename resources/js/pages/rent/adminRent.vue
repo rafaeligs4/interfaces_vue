@@ -42,7 +42,7 @@ onMounted(()=>{
             <!-- <td id="row_estado" class=""> {{car.estado}}</td>  -->
            <td>
              <div class="">
-            <router-link  to='"/editcar/"+rent.id'>
+            <router-link  :to='"/editrent/"+rent.id'>
                 <button class="btn btn-dark">Imprimir Factura</button>
             </router-link>  
              </div>     
