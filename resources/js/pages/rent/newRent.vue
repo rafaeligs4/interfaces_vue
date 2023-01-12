@@ -1,5 +1,6 @@
 <script setup>
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import { ref,onMounted } from 'vue';
 
 const form = ref({
@@ -161,10 +162,23 @@ const createRent = ()=>{
     axios.post('/api/create_rent',formdata)  
     .then((response)=>{
         console.log(response.data)
-  //      router.push('/home');
+        Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Se han editado los datos correctamente',
+        showConfirmButton: false,
+        timer: 1500
+});     
     })
     .catch((error)=>{
-
+        Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Upps... :(',
+        text: 'Parece que tienes un error dentro de los datos ingresados',
+        showConfirmButton: false,
+        timer: 1500
+});     
         error_array=error.response.data.error;
         console.log(error_array);
         showErrors(error_array);

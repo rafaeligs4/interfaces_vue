@@ -3,6 +3,7 @@ import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import { jsPDF } from 'jspdf';  
 import autoTable from 'jspdf-autotable'; 
+import Swal from 'sweetalert2';
 let cars = ref([]); 
 let role;
 const usuarioId = JSON.parse(document.head.querySelector('meta[name="user"]').content);
@@ -10,16 +11,38 @@ const all_cars = async () =>{
     let response = await axios.get("/api/get_all_cars").
     then(response=>{
      cars.value = response.data.carros; 
-
     });
 }
 const get_User =async () =>{
     let usuario = await axios.get('/api/edit/'+usuarioId);
-    
    role=usuario.data.user.rol;
    console.log(role);
 }
 const eliminarPerfil = (num) =>{
+const swalWithBootstrapButtons = Swal.mixin({
+  customClass: {
+    confirmButton: 'btn btn-success',
+    cancelButton: 'btn btn-danger'
+  },
+  buttonsStyling: false
+})
+
+swalWithBootstrapButtons.fire({
+  title: 'Estas seguro de eliminar este Auto?',
+  text: "No se revertirá la accion",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonText: 'Si, Eliminar',
+  cancelButtonText: 'No, Cancelar',
+  reverseButtons: true
+}).then((result) => {
+  if (result.isConfirmed) {
+    swalWithBootstrapButtons.fire(
+      'Eliminado!',
+      'Este auto ha sido Eliminado.',
+      'success'
+      
+    );
     axios.post('/api/delete_car/'+num) 
     .then((response)=>{
         console.log(response);
@@ -27,7 +50,19 @@ const eliminarPerfil = (num) =>{
     })
     .catch((error)=>{
         console.log(error.response);
-    });  
+    }); 
+  } else if (
+    /* Read more about handling dismissals below */
+    result.dismiss === Swal.DismissReason.cancel
+  ) {
+    swalWithBootstrapButtons.fire(
+      'Cancelado',
+      'No se ha eliminado el Auto :)',
+      'error'
+    )
+  }
+})
+    
 }
 const changeState = (id,estado) =>{
     const formdata=new FormData();

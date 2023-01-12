@@ -6,6 +6,7 @@
 import axios from 'axios';
 import useValidate from '@vuelidate/core';
 import {required,email,minLength} from '@vuelidate/validators';
+import Swal from 'sweetalert2';
 import { onMounted, ref } from 'vue';
 import {useRouter} from 'vue-router';
 const router=useRouter()
@@ -23,16 +24,6 @@ const sub3 = () =>{
 const sub4 = () =>{
     document.getElementById("file-in4").click();
 }
-// document.getElementById("attachment").addEventListener('click', function() {
-
-// });
-
-// const myModal = document.getElementById('myModal')
-// const myInput = document.getElementById('myInput')
-
-// myModal.addEventListener('shown.bs.modal', () => {
-//   myInput.focus()
-// })
 let valor = 0;
 let submitted = false, 
 submitted2=false; 
@@ -87,7 +78,7 @@ const uploadData= () => {
     console.log("sending");
 
     const formdata=new FormData();
-    if(validateData()){
+ //   if(validateData()){
     formdata.append('marca',form.value.marca);
     formdata.append('modelo',form.value.modelo);
     formdata.append('color',form.value.color);
@@ -101,16 +92,25 @@ const uploadData= () => {
    axios.post('/api/create_car',formdata)  
     .then((response)=>{
         console.log(response.data)
+        Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Se han editado los datos correctamente',
+        showConfirmButton: false,
+        timer: 1500
+});     
+        router.push('/home');   
   //      router.push('/home');
     })
     .catch((error)=>{
+     
         console.log(error.response)
     })
     ; 
-    }
-    else{
+//    }
+ //   else{
         console.log("error"); 
-    }
+ //   }
     
 }
 const knowPhoto = (numero) =>{
@@ -167,7 +167,15 @@ const validateData = ()=>{
  
   v$.value.$validate();
   console.log(v$.value.$errors);
- if(v$.value.nombre_tipo_vehiculo){
+ if(v$.value.$errors){
+    Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Uupps :(',
+        text: 'Parece que hay error en algun dato',
+        showConfirmButton: false,
+        timer: 1500
+});  
    if(v$.value.marca.$error){
         let error_marca = "";
         if(v$.value.marca.required.$invalid){

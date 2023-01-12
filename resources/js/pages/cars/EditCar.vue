@@ -3,6 +3,7 @@
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import {useRouter} from 'vue-router';
+import Swal from 'sweetalert2'
 const router=useRouter()
 
 let valor = 0;
@@ -195,11 +196,18 @@ const uploadData= () => {
     formdata.append('foto4',form.value.foto4); 
    axios.post('/api/edit_car/'+props.id,formdata)  
     .then((response)=>{
+        Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Se han editado los datos correctamente',
+        showConfirmButton: false,
+        timer: 1500
+});
         console.log(response.data)
         router.push('/home');
     })
-    .catch((error)=>{
-        error_array=error.response.data.error;
+    .catch((err)=>{
+        error_array=err.response.data.error;
         showErrors(error_array);
 
     })
