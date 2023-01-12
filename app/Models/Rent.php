@@ -15,7 +15,9 @@ class Rent extends Model
         'car_id',
         'price',
         'fecha_inic',
-         'fecha_final'
+         'fecha_final',
+         'estado',
+         'days'
     ];
 
 public function cars(){

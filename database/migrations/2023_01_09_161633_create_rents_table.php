@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('price');
             $table->date('fecha_inic')->nullable();
             $table->date('fecha_final')->nullable();
+            $table->integer('days');
+            $table->string('estado');
             $table->timestamps();
         });
     }

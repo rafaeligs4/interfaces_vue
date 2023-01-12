@@ -13,6 +13,7 @@ let value = axios.get('/api/get_all_rents').then(response=>{
 onMounted(()=>{
     getRents();
 }); 
+
 </script>
 <template>
     <div class="container">
@@ -23,13 +24,15 @@ onMounted(()=>{
         <table  id="table_id" class="table table-striped principal rounded"> 
             <thead> 
             <tr>
-                <th id="row_head">Id  </th>
+                <th id="row_head">Id</th>
                 <th id="row_head">Cliente</th>
                 <th id="row_head">Auto</th>
-                <th id="row_head" >Acciones</th>
-                <th id="row_head">Estado</th>
-                <th>Imprimir Factura</th>
+                <th id="row_head">Precio</th>
                 <th>Editar</th> 
+                <th>Ver Factura</th>
+                
+                <th id="row_head">Estado</th>
+               
                 
             </tr> 
         </thead>
@@ -43,7 +46,7 @@ onMounted(()=>{
            <td>
              <div class="">
             <router-link  :to='"/editrent/"+rent.id'>
-                <button class="btn btn-dark">Imprimir Factura</button>
+                <button class="btn btn-dark" >Editar Alquiler</button>
             </router-link>  
              </div>     
                                              
@@ -51,15 +54,15 @@ onMounted(()=>{
             <td >
             <div class="">
                 <router-link  :to='"/invoice-rent/"+rent.user_id'> 
-              <button class="btn btn-danger">Eliminar perfil</button> 
+              <button class="btn btn-dark" >Ver Factura</button> 
               </router-link>     
             </div> 
             </td>  
             <td > 
-                <select name="" id=""   class="form-control" @change="changeState(car.id,car.estado)">
-                   <option value="Activo">Activo</option>
-                   <option value="Inactivo">Inactivo</option>
-                   <option value="Alquilado">Alquilado</option>  
+                <select name="" id=""   class="form-control" @change="changeState(rent.id,rent.estado)">
+                   <option value="Activo">cancelado</option>
+                   <option value="Alquilado">finalizado</option>  
+                   <option value="Inactivo">vencido</option>
                 </select> 
             </td>
         </tr>

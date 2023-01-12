@@ -10,14 +10,18 @@ const form = ref({});
 const i= ref({
     v:0
 });
+function printHTML() {
+ window.print();
+}
 const props = defineProps({
     id:{
         type: String,
         default: ''
     }  
 });
-const getDate=()=>{
-    const date = Date.now();
+const actual=()=>{
+    let date = new Date();
+    date=Date.now();
     
     let day = date.getDate()
     let month = date.getMonth() + 1
@@ -49,16 +53,19 @@ const iva = ()=>{
 const sumTotal =()=>{
         return ivaT+total;
 }
-const get_data=async ()=>{
+
+const get_data=async()=>{
     axios.get('/api/get_data_invoice/'+props.id)
     .then(response=>{
         console.log(response.data);
         form.value=response.data; 
         i.value.v=form.value.cars.length;
+      
       total=calcIva();
       ivaT=iva();
       suma=sumTotal();
-      date=getDate();
+      date=actual();
+      
     }).catch(error =>{
         console.log(error);
     });
@@ -96,7 +103,8 @@ onMounted(()=>{
                 Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bcd5d2dad3fcddd0d1ddcfddd9d9d8cfc8c9d8d5d392dfd3d1">[email&#160;protected]</a>
                
         </div>
-         <h4 class="align-items-center">Rent a Car</h4>
+     
+         <h4 class="align-items-center">Factura Numero: 00001</h4>
                 
         
        
@@ -112,18 +120,20 @@ onMounted(()=>{
 </div>
 
 <div class="row invoice-info">
-<div class="col-sm-4 invoice-col">
-<!-- Datos del Cliente:
+<div v-if="i.v!=0" class="col-sm-4 invoice-col">
+Datos del Cliente:
+<!-- <div v-if="form.user.name != null">{{form.user.name}}</div> -->
 <address>
-<strong >{{ form.user.name +" "+ form.user.apellido}}</strong><br>
+
+<strong >{{form.user.name}}</strong>
 Cédula de Identidad: {{ form.user.cedula}}    <br>
 Numero de Licencia:  {{  form.user.no_licencia}}<br>
 Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="97fdf8fff9b9f3f8f2d7f2eff6fae7fbf2b9f4f8fa">[email&#160;protected]</a>
-</address> -->
+</address>
 </div>
 
 <div class="col-sm-4 invoice-col">
-<b>Factura Numero: 00001</b><br>
+
 <br>
 
 </div> 
@@ -150,7 +160,7 @@ Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="
     <td >{{form.cars[value-1][0].marca}}</td>
     <td >{{form.cars[value-1][0].modelo}}</td>
     <td >{{form.cars[value-1][0].placa}}</td> 
-    <td>Precio Unit.</td>
+    <td>{{form.rents[value-1].price/form.rents[value-1].days}}</td>
     <td >{{form.rents[value-1].price}}</td>
 
 </tr>
@@ -193,9 +203,13 @@ dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
 </table>
 </div>
 </div>
-
+<div class="no-print">
+    <button type="button" class="btn btn-danger float-right" @click="printHTML()" style="margin-right: 5px;">
+<i class="fas fa-download"></i> Imprimir Factura
+</button>
 </div>
 
+</div>
 
 
 </div>

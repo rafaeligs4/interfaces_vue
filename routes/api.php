@@ -57,3 +57,4 @@ Route::get('/get_data_invoice/{id}',[RentController::class,'dataInvoice']);
 Route::get('/get_all_rents',[RentController::class,'getAllc']);  
 
 Route::post('/create_rent/',[RentController::class,'create_rent']);  
+Route::post('/post_edit_rent/{id}',[RentController::class,'edit_rent']);  
