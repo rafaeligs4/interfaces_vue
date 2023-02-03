@@ -19,6 +19,4 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-//Route::get('/{pathmatch}',function(){
-//return view('welcome');
-//})->where('pathmatch',"*");  
+Route::get('/index',function(){return view('welcome'); });    

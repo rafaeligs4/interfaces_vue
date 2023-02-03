@@ -29,6 +29,8 @@ import { createApp } from 'vue';
 
 import headup from './components/headLink.vue';
 import sidebar from './components/sidebar.vue';
+import modalCar from './components/car-modal.vue'
+import index from  './components/index.vue';
 import footer from './components/footer.vue';
 import editType from './pages/type_cars/EditType.vue';
 import editCarType from './pages/type_cars/EditCarType.vue';
@@ -37,6 +39,8 @@ const app=createApp(App);
 app.component('headup', headup)
 .component('foot',footer)
 .component('typecar',editType)
+.component('index',index)
+.component('car-modal',modalCar)
 .component('edittc',editCarType);
 ;
 //app.component('app', App); 

@@ -6,7 +6,7 @@
 
     <!-- CSRF Token -->
     <meta name="token" id="token" value="{{ csrf_token() }}">
-    <meta name="user" content="{{ Auth::id() }}">
+    <meta name="user" content="{{ Auth::id() ?? 0 }}">
     
     <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -18,7 +18,23 @@
     <link rel="stylesheet" href="{{asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
     <link rel="stylesheet" href="{{'css/adminlte.min.css'}}">
     <link rel="stylesheet" href="{{asset('css/style.css')}}"> 
-   
+    <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css" />
+
+  <!-- font awesome style -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="{{asset('index_styles/css/bootstrap.css')}}" />
+
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700|Roboto:400,700&display=swap" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="{{asset('index_styles/css/style.css')}}" rel="stylesheet" />
+  <!-- responsive style --> 
+  <link href="css/responsive.css" rel="stylesheet" />
     <!-- Scripts -->
     <script src="{{asset('selec2/dist/js/select2.min.js')}}"></script>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -229,6 +245,50 @@ Nora Silvester
     <script type="text/javascript" charset="utf8" src="/DataTables/datatables.js"></script>
     <script src="{{asset('public/js/adminlte.min.js')}}"></script>
     <script src="{{asset('public/js/demo.js')}}"></script>      
-  
+    <script type="text/javascript" src="{{asset('index_styles/css/bootstrap.css')}}"></script>
+  <script type="text/javascript" src="{{asset('index_styles/css/bootstrap.css')}}"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.min.js">
+  </script>
+  <script type="text/javascript">
+    $(".owl-carousel").owlCarousel({
+      loop: true,
+      margin: 10,
+      nav: true,
+      navText: [],
+      autoplay: true,
+      responsive: {
+        0: {
+          items: 1
+        },
+        600: {
+          items: 2
+        },
+        1000: {
+          items: 4
+        }
+      }
+    });
+  </script>
+  <script type="text/javascript">
+    $(".owl-2").owlCarousel({
+      loop: true,
+      margin: 10,
+      nav: true,
+      navText: [],
+      autoplay: true,
+
+      responsive: {
+        0: {
+          items: 1
+        },
+        600: {
+          items: 2
+        },
+        1000: {
+          items: 4
+        }
+      }
+    });
+  </script>
 </body> 
 </html> 

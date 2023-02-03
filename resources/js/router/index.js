@@ -89,7 +89,10 @@ const routes=[
     ]
         
     },
-    
+    {
+        path:'/index',
+        component: index,
+    }
 ]
 
 const router= createRouter({
